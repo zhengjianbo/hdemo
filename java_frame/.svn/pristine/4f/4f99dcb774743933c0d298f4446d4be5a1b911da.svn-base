@@ -1,0 +1,3 @@
+body{    background-color: #FFF !important;}
+
+img{border:0; height:auto; line-height:100%; outline:none; text-decoration:none;       max-width: 260px;!important }

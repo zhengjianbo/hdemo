@@ -1,0 +1,56 @@
+
+<%
+if(isEmpty(data)){
+	data=null;
+} 
+if(isEmpty(url)){
+	 //没有地址 不处理 
+	 
+}else{ 
+	//获取
+	if(isEmpty(isajax)){
+		isajax=false;
+	}
+	if(isEmpty(paras)){
+		paras={};
+	}
+	if(isajax==false){ 
+		  include(url,{data:data,paras:paras}){ }  
+	}else{
+		//执行ajax请求
+%>
+<script>
+	function ajaxLoad(){
+	//方法1 ajax 读取数据
+		var requestUrl= '${BASE_PATH}/admin/jmodald/getLayout'; //配置 
+		function inner_showdata(data) {  
+			if(Const.isEmpty(data)){ 
+				AlertBox("失败");
+				return;
+			}
+			AlertBox(data.MESSAGE);
+			if(data.RESULT){ 
+				 
+				return;
+			}  
+		} 
+		
+		var params={'ID':'${id}'};
+		var req = ReqUtils.create(requestUrl, params, function(result,
+				p1, p2, p3) {
+			if (result == 0) { 
+				AlertBox("操作失败!");
+				return;
+			}
+			if (result == 1) {  
+				inner_showdata(p1);  
+			}
+		}); 
+		req.get(); 
+	}
+</script>
+<%		
+	}
+}
+
+%>

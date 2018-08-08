@@ -1,0 +1,27 @@
+显示表单插件 统一用一个 通过传入参数来判断 插件类型
+ 
+<%
+	if(isEmpty(id)){
+		id="";
+	}
+	if(isEmpty(name)){
+		name="";
+	}
+	if(isEmpty(class)){
+		class="";
+	}
+	
+	if(isEmpty(value)){
+		value="";
+	}
+	
+%>
+//通过传入参数来判断
+<%	
+	 
+	//ptype 插件类型
+	if(isEmpty(ptype)){ 
+ 		include("plugin/include_plugin_label.html",{id:id,name:name,class:class,value:value}){ } 	 
+	}
+	 
+%>  

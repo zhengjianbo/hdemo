@@ -1,0 +1,30 @@
+<!-- label 标签内容 -->
+<%
+	 if(isEmpty(id)){
+		id="";
+	}
+	if(isEmpty(name)){
+		name="";
+	}
+	if(isEmpty(class)){
+		class="";
+	}
+	
+	if(isEmpty(value)){
+		value="";
+	}
+	
+	if(!isEmpty(item)){
+		 id=item.control_field_id;
+		 value=item.control_value; //${x}
+		 if(isEmpty(value)){
+		 	value=item.control_label;
+		 }
+		 col_md=item.control_layout;
+		 
+	} 
+	if(isEmpty(name)){
+		name=id;
+	}
+%>
+<label id="${id}"  name="${name}" class="${class} ${col_md}">${value}</label>

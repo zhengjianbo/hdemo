@@ -1,0 +1,27 @@
+<%
+ 	 
+ 	 if(isEmpty(data)){
+ 	 	data="";
+ 	 }
+ 		include(FRONT,{data:data,FLAG:11056}){ } 
+ 		
+ 	 if(isEmpty(id)){ 
+ 	 	 assert(false,"页面参数错误");
+ 	 }
+ %>
+ 
+ <!-- 通过 form design 来 设计 并展示 -->
+<% 
+var formJson=	FileUtils.getFromFileContent("/"+id); 
+var frmJson=JavaScriptUtils.getJavaScript(formJson);
+	
+ 	if(!isEmpty(frmJson)){
+	 	for(formItem in frmJson){   
+		 	layout("/uview/plugin/include_plugin.html",{data:data,item:formItem}){}   
+	 	} 
+ 	}else{
+ 		println("");
+ 	}
+	include("include_end.html"){ } 
+%>  
+ 

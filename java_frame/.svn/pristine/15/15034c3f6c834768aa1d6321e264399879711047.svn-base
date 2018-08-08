@@ -1,0 +1,41 @@
+<% 
+		include("/uview/include_front.html",{TITLE:"标题INDEX",data:data,FLAG:110654}){ } 
+%>  
+ 		
+ 		//获取数据
+ 		<div class="" id="table_data"></div>
+ 		
+ <script>
+ 		
+ 
+ 		
+ var jdata_table_data=[];   
+ <%                            
+ 	var dataObject_table_data=JavaScriptUtils.getJavaScript(data);     
+ %>                                               
+ var jData_table_data=${dataObject_table_data};  
+ jdata=jData_table_data.DATA;         
+ laytable.render({                    
+	   elem: "#table_data"                    
+	   ,data:jdata                            
+	   ,cols: [[                              
+		   {field:"NOTICETITLE", width:80, title: "标题", sort: false}   
+	   ]]                                                          
+	   ,xpage:    { 				
+		   elem: "#table_data"	   
+		   ,count: 111	 
+		   ,curr:1	  
+		   ,layout: [   "next",   "count",   "limit",   "prev",   "page",   "skip","" ]	 
+		   ,jump: function(obj){
+				
+		   }	  
+	   } 
+		,page:false
+ });    
+ 		
+</script>
+ 		
+<% 
+		include("/uview/include_end.html"){ } 
+%>  
+	

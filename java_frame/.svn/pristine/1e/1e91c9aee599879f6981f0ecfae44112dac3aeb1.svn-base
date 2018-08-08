@@ -1,0 +1,7 @@
+<%
+	//按钮显示 可以前面传入参数来显示这个按钮
+%>
+<button class="layui-btn layui-btn-primary">原始按钮</button>
+
+<%
+%>

@@ -1,0 +1,33 @@
+<!--  传入item配置 进行显示分配  -->
+<%
+	if(!isEmpty(item)){ 
+		 if(isEmpty(item.control_type)){
+		 
+		 }else if(item.control_type=="text"){ 
+		 	 layout("/uview/plugin/include_plugin_input.html",{data:data,item:item}){} 
+		 	 
+		 }else if(item.control_type=="label"){ 
+		 	 layout("/uview/plugin/include_plugin_label.html",{data:data,item:item}){} 
+		 	 
+		 }else if(item.control_type=="div"){
+		 
+		 	layout("/uview/plugin/include_plugin_div.html",{data:data,item:item}){} 
+		 	
+		 }else if(item.control_type=="div_end"){
+		 	print("</div>");
+		 }else if(item.control_type=="form"){
+		 	 layout("/uview/plugin/include_plugin_form_start.html",{data:data,item:item}){} 
+		 }else if(item.control_type=="form_end"){
+		 	print("</form>");
+		 }else if(item.control_type=="button"){
+		 	 layout("/uview/plugin/include_plugin_button.html",{data:data,item:item}){} 
+		 }else if(item.control_type=="radio"){
+		 	 layout("/uview/plugin/include_plugin_radio.html",{data:data,item:item}){} 
+		 }else if(item.control_type=="checkbox"){
+		 	 layout("/uview/plugin/include_plugin_checkbox.html",{data:data,item:item}){} 
+		 }else{
+		 	//还未添加的控件  默认是空
+		 	layout("/uview/plugin/include_plugin_label.html",{data:data,item:item}){} 
+		 }
+	}
+%> 

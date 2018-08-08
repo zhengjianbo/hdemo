@@ -1,0 +1,11 @@
+package com.ram.kettle.log;
+
+public class ConstLog {
+	public static void message(String msg) {
+		System.out.println("msg:"+msg);
+	}
+
+	public static void message(Exception e) {
+
+	}
+}

@@ -1,0 +1,65 @@
+<!-- 公用HEADER -->
+ <!DOCTYPE html>
+<% 
+	var XPATH=BASE_PATH+"/assets/media";
+	if(isEmpty(TITLE)){
+		TITLE="网站";
+	}
+ %>																				
+ <html>                                                                                        
+ <head>                                                                                        
+ <meta charset="utf-8">                                                                        
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">                        
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">                           
+ <title>${TITLE}</title>                                                                               
+      <!-- 
+ <link href="${XPATH}/extcss/bootstrap-combined.min.css" rel="stylesheet" type="text/css"/>  
+ <link href="${XPATH}/extcss/m.css" rel="stylesheet" type="text/css"/>  
+  -->
+<link rel="stylesheet" href="${XPATH}/css/layui.css" media="all">
+<link rel="stylesheet" href="${XPATH}/css/global.css" media="all">
+<link rel="stylesheet" href="${XPATH}/css/formdesgin.css" media="all">
+ 
+<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+<!--[if lt IE 9]>
+  <script src="${XPATH}/html5.min.js"></script>
+  <script src="${XPATH}/respond.min.js"></script>
+<![endif]-->
+<!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->                     
+ <script type="text/javascript" src="${BASE_PATH}/assets/media/extjs/API.js"></script>                         
+ <script type="text/javascript" src="${BASE_PATH}/assets/media/extjs/config.js"></script>
+
+ <script src="${XPATH}/layui.all.js" charset="utf-8"></script>    
+ <script>
+
+ var layui_form = layui.form;
+ var laydate = layui.laydate;
+ var laypage = layui.laypage ;
+ var layer = layui.layer;
+ var laytable = layui.table;
+ 
+ 
+ </script>                    
+ </head> 
+                                                                                       
+ <body>   
+<%
+	if(!isEmpty(methodName)){
+		if(methodName=="page"){
+			//不判断
+		}else{
+			var parseGoOn=true; 
+			if(isEmpty(FLAG)){
+				parseGoOn=false;
+			}else if(!CheckPage(FLAG)){ 
+				parseGoOn=false;
+			} 
+			if(!parseGoOn){ 
+				 assert(false,"页面无权限控制");
+			}
+		}
+	
+	}
+%>
+                                                                            
+ <!-- BODY 前面结束 -->

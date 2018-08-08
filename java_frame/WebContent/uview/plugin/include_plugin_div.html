@@ -1,0 +1,11 @@
+<%
+	if(isEmpty(class)){
+		class="";
+	} 
+	  
+	if(!isEmpty(item)){
+		 id=item.control_field_id; 
+		 class=item.control_layout;
+	}   
+%>
+<div class="${class}">

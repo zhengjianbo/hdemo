@@ -1,0 +1,17 @@
+﻿
+
+
+.lr-input-form .btn button {background-color:#4d90fe;width:100%;border-radius:10px;height:34px;color:#fff;border:0;cursor:pointer;}
+.lr-input-form .btn button[disabled] {border: 1px solid #eeecec;background: #eeecec;color: #9f9f9f;text-shadow: 0 1px 0 #fff;cursor: default;}
+.lr-input-form .btn button.active {background-image: url(../images/loading1.gif);background-repeat: no-repeat;background-position: center 10px;z-index:10;}
+
+
+#register_getcode {background-color:#B7B7B5;border-radius:5px;height:35px;color:#707070;border:0;cursor:pointer;margin-top:4px;}
+.lr-input-form .login_tips {text-indent: 3px;height: 30px;line-height: 33px;border: 1px solid #ebccd1;color: #a94442;background-color: #f2dede;border-radius: 5px;width: 100%;margin-top: -35px;}
+.login_tips i {position: relative;top: 1px;padding-right: 5px;}
+.lr-input-form .login_tips-succeed{position:absolute;text-indent:3px;height:30px;line-height:33px;border:1px solid #5e8800;color: #fff;background-color: #62b600 ;border-radius:5px;width: 306px;margin-top: -35px;}
+.login_tips-succeed i{position: relative;top: 1px;padding-right: 5px;}
+
+
+
+

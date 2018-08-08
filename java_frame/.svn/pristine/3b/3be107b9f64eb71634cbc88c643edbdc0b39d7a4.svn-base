@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<% 
+	 
+	var fpath=BASE_PATH+"/assets/";
+	var XPATH=BASE_PATH+"/assets/media";
+%>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>布局设计</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="${XPATH}/css/layui.css" media="all">
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+  
+  
+ <script src="${XPATH}/layui.all.js" charset="utf-8"></script>
+ 
+    <script src="${fpath}Content/scripts/jquery/jquery-1.10.2.min.js"></script>
+    <script src="${fpath}Content/scripts/plugins/jquery-ui/jquery-ui.min.js"></script>
+    
+    <script src="${fpath}Content/scripts/bootstrap/bootstrap.min.js"></script>
+   
+   
+    <script src="${fpath}Content/scripts/utils/LD-applayout.js"></script> 
+  
+	
+ <script type="text/javascript" src="${BASE_PATH}/assets/media/extjs/API.js"></script>                         
+ <script type="text/javascript" src="${BASE_PATH}/assets/media/extjs/config.js"></script>
+   
+    
+<link href="${fpath}Content/styles/font-awesome.min.css" rel="stylesheet" />
+<link href="${fpath}Content/styles/LD-ui.css" rel="stylesheet" />  
+<link href="${fpath}Content/styles/LD-applayout.css" rel="stylesheet" /> 
+<link href="${XPATH}/css/formdesgin.css" rel="stylesheet" type="text/css"/>   
+<!-- 
+<link href="${fpath}Content/scripts/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+     
+<link href="${XPATH}/extcss/bootstrap-combined.min.css" rel="stylesheet" type="text/css"/>  
+<link href="${XPATH}/extcss/m.css" rel="stylesheet" type="text/css"/>  
+    -->
+ 
+<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+<!--[if lt IE 9]>
+  <script src="${XPATH}/html5.min.js"></script>
+  <script src="${XPATH}/respond.min.js"></script>
+<![endif]-->
+  
+</head>
+<body>
+        
+<form class="layui-form"  >
+    <div class="widget-body ">
+
+<div id="wizard" class="wizard" data-target="#wizard-steps" >
+        <ul class="steps layui-form-pane">
+               <div class="layui-form-item" style="margin-left:5px;padding-top:4px;">
+               		<div class="layui-inline">
+					    <label class="layui-form-label">模块</label>
+					    <div class="layui-input-block">
+					      <select id="select_modal" name="select_modal" lay-filter="modal">
+					        <option value="uview">UVIEW</option>
+					        <option value="view">VIEW</option>
+					        <option value="admin" selected="">ADMIN</option>
+					        
+					      </select>
+					    </div>
+					 </div>
+					 <div class="layui-inline">
+					    <label class="layui-form-label">文件名</label>
+					    <div class="layui-input-block">        
+					      		<input type="text" id="control_file" name="control_file" 
+					      			placeholder="请输入" autocomplete="off" lay-verify="required"  class="layui-input">     
+					      
+					    </div>
+					 </div>
+					<div class="layui-inline">
+					    <label class="layui-form-label">FLAG</label>
+					    <div class="layui-input-block">
+					      	     
+					      		<input type="text" id="control_flag" name="control_flag" 
+					      			placeholder="请输入" autocomplete="off" lay-verify="required"  class="layui-input">     
+					      	 
+					    </div>
+					 </div>
+					  <div class="layui-inline">
+					    <label class="layui-form-label">说明</label>
+					    <div class="layui-input-block">
+					      	   
+					      		<input type="text" id="control_info" name="control_info" 
+					      			placeholder="请输入" autocomplete="off"   class="layui-input">     
+					      	 
+					    </div>
+					 </div>
+					 <div class="layui-inline">
+					     <button id="bt_save" class="layui-btn layui-btn-sm layui-btn-normal" type="button"> 保存  </button>
+					     <button id="bt_save_temp"  class="layui-btn layui-btn-sm layui-btn-warm" type="button"> 草稿  </button>
+					     <button id="bt_preview"  class="layui-btn layui-btn-sm  " type="button"> 预览  </button>
+					     <button id="bt_generate"  class="layui-btn layui-btn-sm  " type="button"> 生成页面  </button>
+					 </div>
+	 			 </div> 
+        </ul>
+    </div>
+
+    <div class="step-content wizard-step-content" id="wizard-steps">
+
+		<div class="step-pane flowapp active" id="step-2">
+				<div id="frmdesign"></div>
+		</div> 
+    </div>
+    <div class="form-button" id="wizard-actions" >  
+    </div>
+ </div>
+ 
+</form>
+ 
+
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+var frmapp = "";
+$(function () {
+    initialPage();
+})
+//初始化页面
+function initialPage() { 
+		$('#step-2 .tab-content').height($(window).height() - 87); 
+		 
+		//方法1 ajax 读取数据
+	 //  ajaxLoad();
+		
+		//方法2  直接读取 
+		 requestLoad();
+		
+		//3 test 
+	//	testLoad();
+		 
+	  	  
+	  	 $("#bt_save").unbind('click').click(function () { 
+              //保存
+	  		save();
+         });
+
+	  	 $("#bt_save_temp").unbind('click').click(function () { 
+              //草稿
+	  		saveTemp();
+         });
+	  	 $("#bt_preview").unbind('click').click(function () { 
+             //预览
+	  		previewbtn(true);
+        });
+		$("#bt_generate").unbind('click').click(function () { 
+             //生成页面
+	  		generate_html();
+        });
+		
+}  
+function setFrmInfo(data)
+{
+    var _height = $(window).height() - 87< 410 ? 410 : $(window).height() - 87; 
+        frmapp = $('#frmdesign').frmDesign({
+            Height: _height,
+             frmContent: data.FrmContent
+        }); 
+} 
+
+function testLoad(){
+	var data={}; 
+	var controlitem=  [{"control_type":"div","control_label":"<div>水电费","control_field":"<div>","control_layout":"layui-col-xs1","control_field_id":"水电费"}
+		  ,{"control_type":"div","control_label":"<div>水电费","control_field":"<div>","control_layout":"layui-col-xs1","control_field_id":"水电费"},{"control_type":"div","control_label":"<div>水电费","control_field":"<div>","control_layout":"layui-col-xs1","control_field_id":"水电费"}
+		  ,{"control_type":"div","control_label":"<div>水电费","control_field":"<div>","control_layout":"layui-col-xs1","control_field_id":"水电费"},{"control_type":"div","control_label":"<div>水电费","control_field":"<div>","control_layout":"layui-col-xs1","control_field_id":"水电费"}
+		  ,{"control_type":"div","control_label":"<div>水电费","control_field":"<div>","control_layout":"layui-col-xs1","control_field_id":"水电费"},{"control_type":"div","control_label":"<div>水电费","control_field":"<div>","control_layout":"layui-col-xs1","control_field_id":"水电费"}
+		  ,{"control_type":"div","control_label":"<div>水电费","control_field":"<div>","control_layout":"layui-col-xs1","control_field_id":"水电费"},{"control_type":"div","control_label":"<div>水电费","control_field":"<div>","control_layout":"layui-col-xs1","control_field_id":"水电费"}
+		  ,{"control_type":"div","control_label":"<div>水电费","control_field":"<div>","control_layout":"layui-col-xs1","control_field_id":"水电费"},{"control_type":"div","control_label":"<div>水电费","control_field":"<div>","control_layout":"layui-col-xs1","control_field_id":"水电费"}
+		  ,{"control_type":"div","control_label":"<div>水电费","control_field":"<div>","control_layout":"layui-col-xs1","control_field_id":"水电费"},
+	];
+ 	 data.FrmContent= JSON.stringify(controlitem);
+  
+  	 $("#control_file").val("用户登录界面");
+  	 $("#control_flag").val("110654");
+  	 $("#control_info").val("登录界面说明");
+   
+  	 setFrmInfo(data);
+	 
+}
+ function requestLoad(){
+	 //直接请求
+<%
+	 	 if(isEmpty(data)){
+%>
+			AlertBox("加载失败!");
+<%
+	 	 }else if(!data.RESULT){
+%>
+			AlertBox("加载失败!");
+<%	 		 
+	 	 }else{
+		 	var dataObject=JavaScriptUtils.getJavaScript(data);
+		 	var dataInfoObject=JavaScriptUtils.getJavaScript(data.FCONTENT_INFO);
+		   if(isEmpty(dataInfoObject)){
+			   dataInfoObject={};
+		   }
+%>
+		var data={}; 
+		var jData=${dataObject};
+		 data.FrmContent= jData.FCONTENT;
+		 
+		 if(data.FrmContent==null||data.FrmContent==''){
+			 data.FrmContent='[{}]';
+			 
+		 }
+		var content_info= ${dataInfoObject};
+		//转换成json
+		
+		 $("#control_file").val(content_info.file);
+		 $("#control_flag").val(content_info.flag);
+		 $("#control_info").val(content_info.info);  //modal
+	
+		 setFrmInfo(data); 	
+<% 	 
+		}
+%>
+	 
+	 	 
+ }
+ function ajaxLoad(){
+	//方法1 ajax 读取数据
+  	var requestUrl= '${BASE_PATH}/admin/jmodald/getLayout'; //保存配置 
+	function inner_showdata(data) {  
+		if(Const.isEmpty(data)){ 
+			AlertBox("失败");
+			return;
+		}
+		AlertBox(data.MESSAGE);
+		if(data.RESULT){ 
+			data.FrmContent=data.FCONTENT;//JSON.stringify(controlitem);
+			
+			 //$("#control_file").val("用户登录界面");
+		  	 //$("#control_flag").val("110654");
+		  	// $("#control_info").val("登录界面说明");
+			setFrmInfo(data);
+			return;
+		}  
+	} 
+	
+	var params={'ID':'${id}'};
+	var req = ReqUtils.create(requestUrl, params, function(result,
+			p1, p2, p3) {
+		if (result == 0) { 
+			AlertBox("操作失败!");
+			return;
+		}
+		if (result == 1) {  
+		 	inner_showdata(p1);  
+		}
+	}); 
+	req.get(); 
+}
+ 
+ 
+ function finishbtn(isPreview,istemp) {
+	 	var frmcotentls = frmapp.getData(true); 
+		var requestUrl= '${BASE_PATH}/admin/jmodald/saveLayout'; //保存配置
+				 
+			function inner_showdata(data) {  
+					if(Const.isEmpty(data)){ 
+						AlertBox("删除失败");
+						return;
+					}
+					AlertBox(data.MESSAGE);
+					if(data.RESULT){ 
+						if(isPreview){
+							window.open("${BASE_PATH}/uview/page/designPreview?id=${id}");
+						}
+						return;
+					}  
+				}  
+				var params={modal:$("#select_modal").val(),"file":$("#control_file").val(),flag:$("#control_flag").val(),info:$("#control_info").val(),
+							istemp:istemp,'ID':'${id}','layout':JSON.stringify(frmcotentls)};
+				var req = ReqUtils.create(requestUrl, params, function(result,
+						p1, p2, p3) {
+					if (result == 0) { 
+						AlertBox("操作失败!");
+						return;
+					}
+					if (result == 1) {  
+						inner_showdata(p1);  
+					}
+				}); 
+				req.get(); 	
+		
+ }
+ function previewbtn(){
+	finishbtn(true,true);
+}
+ function saveTemp(){
+	 //保存草稿
+	finishbtn(false,true);
+ }
+ function save(){ 
+	finishbtn(false,false);
+ }
+ 
+ function generate_html() {
+	 	var frmcotentls = frmapp.getData(true); 
+		var requestUrl= '${BASE_PATH}/admin/jmodald/generation_code'; 
+				 
+			function inner_showdata(data) {  
+					if(Const.isEmpty(data)){ 
+						AlertBox("生成失败");
+						return;
+					}
+					AlertBox(data.MESSAGE);
+					//if(data.RESULT){  
+					//	return;
+					//}  
+				}  
+				//先保存再进行代码生成
+				var params={ 'ID':'${id}' };
+				var req = ReqUtils.create(requestUrl, params, function(result,
+						p1, p2, p3) {
+					if (result == 0) { 
+						AlertBox("操作失败!");
+						return;
+					}
+					if (result == 1) {  
+						inner_showdata(p1);  
+					}
+				}); 
+				req.get(); 	
+		
+ }
+ 
+</script>
+ 
+</body>
+</html>

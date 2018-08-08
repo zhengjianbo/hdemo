@@ -1,0 +1,4 @@
+<% 
+	var FLAG=11056;
+		include("/uview/include_front.html",{TITLE:"",FLAG:FLAG}){ } 
+%> 

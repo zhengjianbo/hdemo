@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+
+<!-- BEGIN HEAD -->
+
+<head>
+
+	<meta charset="utf-8" />
+
+	<title>Metronic | Login Page</title>
+
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+	<meta content="" name="description" />
+
+	<meta content="" name="author" />
+
+	<!-- BEGIN GLOBAL MANDATORY STYLES -->
+
+	<link href="${BASE_PATH}/assets/media/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+ 
+	<link rel="shortcut icon" href="${BASE_PATH}/media/image/favicon.ico" />
+
+</head>
+<body>
+	首页 
+	<%
+		var FLAG=10002;
+		var isAllow=CheckPage(FLAG);
+		println("isAllow:"+isAllow);
+		println("CheckStep:" );
+		var isBAllow=CheckStep("BT_ADD");
+		println("BT_ADD isBAllow:"+isBAllow);
+		isBAllow=CheckStep("BT_EDIT");
+		println("BT_EDIT isBAllow:"+isBAllow);
+		isBAllow=CheckStep("BT_EDIT_X");
+		println("BT_EDIT_X isBAllow:"+isBAllow);
+		
+		println("data:"+data);
+	%>
+	
+</body>
+</html>

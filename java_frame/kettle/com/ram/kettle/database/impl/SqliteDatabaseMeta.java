@@ -1,0 +1,260 @@
+package com.ram.kettle.database.impl;
+
+import com.ram.kettle.database.BaseDatabaseMeta;
+import com.ram.kettle.database.DatabaseInterface;
+import com.ram.kettle.database.DatabaseMeta;
+import com.ram.kettle.util.Const;
+import com.ram.kettle.value.ValueMetaInterface;
+
+public class SqliteDatabaseMeta extends BaseDatabaseMeta implements
+		DatabaseInterface {
+	private String pluginId = "SQLITE";
+
+	public String getPluginId() {
+		return pluginId;
+	}
+
+	public int[] getAccessTypeList() {
+		return new int[] { DatabaseMeta.TYPE_ACCESS_NATIVE,
+				DatabaseMeta.TYPE_ACCESS_ODBC, DatabaseMeta.TYPE_ACCESS_JNDI };
+	}
+
+	/**
+	 * Returns the minimal SQL to launch in order to determine the layout of the
+	 * resultset for a given database table
+	 * 
+	 * @param tableName
+	 *            The name of the table to determine the layout for
+	 * @return The SQL to launch.
+	 */
+	public String getSQLQueryFields(String tableName) {
+		return "SELECT * FROM " + tableName + " where 1=2 "; //$NON-NLS-1$ //$NON-NLS-2$
+	}
+
+	public String getSQLTableExists(String tablename) {
+		return getSQLQueryFields(tablename);
+	}
+
+	public String getSQLColumnExists(String columnname, String tablename) {
+		return getSQLQueryColumnFields(columnname, tablename);
+	}
+
+	public String getSQLQueryColumnFields(String columnname, String tableName) {
+		return "SELECT " + columnname + " FROM " + tableName + "  where 1=2 "; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	}
+
+	public int getNotFoundTK(boolean use_autoinc) {
+		if (supportsAutoInc() && use_autoinc) {
+			return 1;
+		}
+		return super.getNotFoundTK(use_autoinc);
+	}
+
+	public String getDriverClass() {
+		if (getAccessType() == DatabaseMeta.TYPE_ACCESS_NATIVE) {
+			return "org.sqlite.JDBC";
+		} else {
+			return "sun.jdbc.odbc.JdbcOdbcDriver"; // always ODBC!
+		}
+	}
+
+	public String getURL(String hostname, String port, String databaseName) {
+		if (getAccessType() == DatabaseMeta.TYPE_ACCESS_NATIVE) {
+			return "jdbc:sqlite:" + databaseName;
+		} else {
+			return "jdbc:odbc:" + databaseName;
+		}
+	}
+
+	/**
+	 * Checks whether or not the command setFetchSize() is supported by the JDBC
+	 * driver...
+	 * 
+	 * @return true is setFetchSize() is supported!
+	 */
+	public boolean isFetchSizeSupported() {
+		return false;
+	}
+
+	/**
+	 * @see org.pentaho.di.core.database.DatabaseInterface#getSchemaTableCombination(java.lang.String,
+	 *      java.lang.String)
+	 */
+	@SuppressWarnings("deprecation")
+	public String getSchemaTableCombination(String schema_name,
+			String table_part) {
+		return getBackwardsCompatibleSchemaTableCombination(schema_name,
+				table_part);
+	}
+
+	/**
+	 * @return true if the database supports bitmap indexes
+	 */
+	public boolean supportsBitmapIndex() {
+		return false;
+	}
+
+	/**
+	 * @return true if Kettle can create a repository on this type of database.
+	 */
+	public boolean supportsRepository() {
+		return false;
+	}
+
+	/**
+	 * @param tableName
+	 *            The table to be truncated.
+	 * @return The SQL statement to truncate a table: remove all rows from it
+	 *         without a transaction
+	 */
+	public String getTruncateTableStatement(String tableName) {
+		return "DELETE FROM " + tableName;
+	}
+
+	/**
+	 * Generates the SQL statement to add a column to the specified table For
+	 * this generic type, i set it to the most common possibility.
+	 * 
+	 * @param tablename
+	 *            The table to add
+	 * @param v
+	 *            The column defined as a value
+	 * @param tk
+	 *            the name of the technical key field
+	 * @param use_autoinc
+	 *            whether or not this field uses auto increment
+	 * @param pk
+	 *            the name of the primary key field
+	 * @param semicolon
+	 *            whether or not to add a semi-colon behind the statement.
+	 * @return the SQL statement to add a column to the specified table
+	 */
+	public String getAddColumnStatement(String tablename, ValueMetaInterface v,
+			String tk, boolean use_autoinc, String pk, boolean semicolon) {
+		return "ALTER TABLE " + tablename + " ADD "
+				+ getFieldDefinition(v, tk, pk, use_autoinc, true, false);
+	}
+
+	/**
+	 * Generates the SQL statement to modify a column in the specified table
+	 * 
+	 * @param tablename
+	 *            The table to add
+	 * @param v
+	 *            The column defined as a value
+	 * @param tk
+	 *            the name of the technical key field
+	 * @param use_autoinc
+	 *            whether or not this field uses auto increment
+	 * @param pk
+	 *            the name of the primary key field
+	 * @param semicolon
+	 *            whether or not to add a semi-colon behind the statement.
+	 * @return the SQL statement to modify a column in the specified table
+	 */
+	public String getModifyColumnStatement(String tablename,
+			ValueMetaInterface v, String tk, boolean use_autoinc, String pk,
+			boolean semicolon) {
+		return "ALTER TABLE " + tablename + " MODIFY "
+				+ getFieldDefinition(v, tk, pk, use_autoinc, true, false);
+	}
+
+	public String getFieldDefinition(ValueMetaInterface v, String tk,
+			String pk, boolean use_autoinc, boolean add_fieldname,
+			boolean add_cr) {
+		String retval = "";
+
+		String fieldname = v.getName();
+		int length = v.getLength();
+		int precision = v.getPrecision();
+
+		if (add_fieldname)
+			retval += fieldname + " ";
+
+		int type = v.getType();
+		switch (type) {
+		case ValueMetaInterface.TYPE_DATE:
+			retval += "DATETIME";
+			break; // There is no Date or Timestamp data type in SQLite!!!
+		case ValueMetaInterface.TYPE_BOOLEAN:
+			retval += "CHAR(1)";
+			break;
+		case ValueMetaInterface.TYPE_NUMBER:
+		case ValueMetaInterface.TYPE_INTEGER:
+		case ValueMetaInterface.TYPE_BIGNUMBER:
+			if (fieldname.equalsIgnoreCase(tk) || // Technical key
+					fieldname.equalsIgnoreCase(pk) // Primary key
+			) {
+				retval += "INTEGER PRIMARY KEY AUTOINCREMENT";
+			} else {
+				if (precision != 0 || length < 0 || length > 18) {
+					retval += "NUMERIC";
+				} else {
+					retval += "INTEGER";
+				}
+			}
+			break;
+		case ValueMetaInterface.TYPE_STRING:
+			if (length >= DatabaseMeta.CLOB_LENGTH) {
+				retval += "BLOB";
+			} else {
+				retval += "TEXT";
+			}
+			break;
+		case ValueMetaInterface.TYPE_BINARY:
+			retval += "BLOB";
+			break;
+		default:
+			retval += "UNKNOWN";
+			break;
+		}
+
+		if (add_cr)
+			retval += Const.CR;
+
+		return retval;
+	}
+
+	public String[] getUsedLibraries() {
+		return new String[] { "sqlite-jdbc-3.7.2.jar" };
+	}
+
+	/**
+	 * @return true if the database supports error handling (the default).
+	 *         Returns false for certain databases (SQLite) that invalidate a
+	 *         prepared statement or even the complete connection when an error
+	 *         occurs.
+	 */
+	public boolean supportsErrorHandling() {
+		return false;
+	}
+
+	/**
+	 * Returns a false as Oracle does not allow for the releasing of savepoints.
+	 */
+	@Override
+	public boolean releaseSavepoint() {
+		return false;
+	}
+
+	@Override
+	public boolean supportsErrorHandlingOnBatchUpdates() {
+		return true;
+	}
+
+	public String getPageSql(final String from,final String orderby, final int page, final int size) {
+		
+		int pageNum = page;// 页数从1开始计数
+		int sizeNum = size;
+		if (page < 1) {
+			pageNum = 1;
+		} 
+		if (sizeNum < 0) {
+			sizeNum = PAGE_SIZE;
+		} 
+		int start = (pageNum - 1) * sizeNum;
+		//和mysql类似
+		return String.format( from+" limit %s offset %s ", sizeNum, start);//size:每页显示条数，index页码
+		 
+	}
+}

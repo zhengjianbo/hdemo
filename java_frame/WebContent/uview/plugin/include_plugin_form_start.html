@@ -1,0 +1,25 @@
+<!-- 表单开头信息  -->
+ <%
+	 if(isEmpty(id)){
+		id="";
+	}
+	if(isEmpty(name)){
+		name="";
+	}
+	if(isEmpty(class)){
+		class="";
+	} 
+	if(isEmpty(value)){
+		value="";
+	} 
+	var style="";
+	if(!isEmpty(item)){
+		 id=item.control_field_id;
+		 value=item.control_value;
+		 style=item.control_style;
+	} 
+	if(isEmpty(name)){
+		name=id;
+	}
+%>
+<form id="${id}" name="${id}" ${style} >

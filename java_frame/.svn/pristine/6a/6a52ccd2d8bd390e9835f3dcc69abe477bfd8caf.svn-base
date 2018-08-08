@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<% 
+	if(isEmpty(id)){
+		id="模板ID";
+	}
+	  
+	var fpath=BASE_PATH+"/assets/";
+	var XPATH=BASE_PATH+"/assets/media";
+%>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Title</title>
+    
+    <script src="${fpath}Content/scripts/jquery/jquery-1.10.2.min.js"></script>
+    <link href="${fpath}Content/styles/font-awesome.min.css" rel="stylesheet" />
+    <link href="${fpath}Content/scripts/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+    <script src="${fpath}Content/scripts/plugins/jquery-ui/jquery-ui.min.js"></script>
+   
+    <link href="${fpath}Content/scripts/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="${fpath}Content/scripts/bootstrap/bootstrap.extension.css" rel="stylesheet" />
+    <script src="${fpath}Content/scripts/bootstrap/bootstrap.min.js"></script>
+   
+    <link href="${fpath}Content/styles/LD-ui.css" rel="stylesheet" /> 
+    <script src="${fpath}Content/scripts/utils/LD-applayout.js"></script> 
+   
+    <link href="${fpath}Content/styles/LD-applayout.css" rel="stylesheet" />
+	
+	
+ <script type="text/javascript" src="${BASE_PATH}/assets/media/extjs/API.js"></script>                         
+ <script type="text/javascript" src="${BASE_PATH}/assets/media/extjs/config.js"></script>
+   
+	
+ <link href="${XPATH}/css/formdesgin.css" rel="stylesheet" type="text/css"/>   
+      
+ <link href="${XPATH}/extcss/bootstrap-combined.min.css" rel="stylesheet" type="text/css"/>  
+ <link href="${XPATH}/extcss/m.css" rel="stylesheet" type="text/css"/>  
+   
+ 
+<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+<!--[if lt IE 9]>
+  <script src="${XPATH}/html5.min.js"></script>
+  <script src="${XPATH}/respond.min.js"></script>
+<![endif]-->
+<!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->                     
+ <script type="text/javascript" src="${BASE_PATH}/assets/media/extjs/API.js"></script>                         
+ <script type="text/javascript" src="${BASE_PATH}/assets/media/extjs/config.js"></script>
+ 
+<link rel="stylesheet" href="${XPATH}/css/layui.css" media="all">
+ <script src="${XPATH}/layui.all.js" charset="utf-8"></script>
+     
+ 
+	  
+</head>
+<body>
+<form id="form1" class="layui-form">
+<div class="widget-body ">
+    <div id="wizard" class="wizard" data-target="#wizard-steps" >
+        <ul class="steps ">
+           <li data-target="#step-1" class="active" ><span class="step">1</span>页面设计<span class="chevron"></span></li>
+			
+			<li> 页面FLAG  
+			</li>
+			<li>   
+
+  
+</li>  
+			<li  > 页面名称 </li>
+			<li  >   </li>
+            <li  > <a id="btn_finish"   class="btn btn-success" onclick="finishbtn();">保存</a> 
+					<a id="btn_preview"   class="btn btn-warning" onclick="previewbtn();">保存并预览</a>
+			</li>
+             
+        </ul>
+    </div>
+    <div class="step-content wizard-step-content" id="wizard-steps">
+
+		<div class="step-pane flowapp active" id="step-2">
+				<div id="frmdesign"></div>
+		</div>
+        <div class="step-pane flowapp " id="step-3">
+				<div id="frmdesign"></div>
+		</div> 
+    </div>
+    <div class="form-button" id="wizard-actions">  
+    </div>
+</div>
+</form>	
+         
+  
+<script>
+     
+	 
+	 
+	 
+    var postData = {};//提交数据
+     
+    var frmapp = "";
+    $(function () {
+        initialPage();
+    })
+    //初始化页面
+    function initialPage() { 
+        $('#step-2 .tab-content').height($(window).height() - 87); 
+		  var data={};
+		  
+		  var controlitem=  [{"control_type":"div","control_label":"<div>水电费","control_field":"<div>","control_layout":"layui-col-xs6","control_field_id":"水电费"},{"control_type":"div_end","control_label":"</div>","control_field":"</div>","control_layout":"layui-col-xs6"},{"control_type":"form_end","control_label":"</form>","control_field":"</form>","control_layout":"layui-col-xs12"},{"control_type":"form","control_label":"<form>水电费","control_field":"<form>","control_layout":"layui-col-xs12","control_field_id":"水电费"},{"control_type":"label","control_label":"标签","control_field":"标签","control_layout":"layui-col-xs6"},{"control_type":"label","control_label":"标签","control_field":"标签","control_layout":"layui-col-xs6"}]
+		 	//data.FrmContent= JSON.stringify(controlitem);
+		  //				setFrmInfo(data);
+			
+			var requestUrl= '${BASE_PATH}/admin/jmodald/getLayout'; //保存配置
+				 
+				function inner_showdata(data) {  
+					if(Const.isEmpty(data)){ 
+						AlertBox("失败");
+						return;
+					}
+					AlertBox(data.MESSAGE);
+					if(data.RESULT){ 
+						 data.FrmContent=data.FCONTENT;//JSON.stringify(controlitem);
+						 setFrmInfo(data);
+						return;
+					}  
+				} 
+				
+				var params={'ID':'${id}'};
+				var req = ReqUtils.create(requestUrl, params, function(result,
+						p1, p2, p3) {
+					if (result == 0) { 
+						AlertBox("操作失败!");
+						return;
+					}
+					if (result == 1) {  
+					 	inner_showdata(p1);  
+					}
+				}); 
+				req.get();
+			
+          
+    }  
+    function setFrmInfo(data)
+    {
+        var _height = $(window).height() - 87 < 410 ? 410 : $(window).height() - 87; 
+            frmapp = $('#frmdesign').frmDesign({
+                Height: _height,
+                 frmContent: data.FrmContent
+            }); 
+    } 
+   
+    /*=========创建完成（begin）==================================================================*/
+    function finishbtn(isPreview) {
+	 	var frmcotentls = frmapp.getData(true);
+	//	$.each(frmcotentls,function(index,item){
+	//		console.log("=="+item.control_field);
+	//	});
+    //    alert(JSON.stringify(frmcotentls) +"=="+JSON.stringify( $('#frmdesign').frmGetData() ) );
+		//保存数据
+		
+				var requestUrl= '${BASE_PATH}/admin/jmodald/saveLayout'; //保存配置
+				 
+				function inner_showdata(data) {  
+					if(Const.isEmpty(data)){ 
+						AlertBox("删除失败");
+						return;
+					}
+					AlertBox(data.MESSAGE);
+					if(data.RESULT){ 
+						if(isPreview){
+							window.open("${BASE_PATH}/uview/page/designPreview?id=${id}");
+						}
+						return;
+					}  
+				} 
+				
+				var params={'ID':'${id}','FLAG':'1','layout':JSON.stringify(frmcotentls)};
+				var req = ReqUtils.create(requestUrl, params, function(result,
+						p1, p2, p3) {
+					if (result == 0) { 
+						AlertBox("操作失败!");
+						return;
+					}
+					if (result == 1) {  
+						inner_showdata(p1);  
+					}
+				}); 
+				req.get(); 	
+		
+    }
+    function previewbtn(){
+		 finishbtn(true);
+	}
+    /*=========创建完成（end）====================================================================*/
+</script>
+
+</body>
+</html>

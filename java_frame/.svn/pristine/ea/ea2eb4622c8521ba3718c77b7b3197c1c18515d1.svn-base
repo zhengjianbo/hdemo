@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="title" content="XEDIT在线编辑器">
+<meta name="description" content="XEDIT在线编辑器!">
+<meta name="keywords" content="XEDIT在线编辑器">
+<title>XEDIT在线编辑器</title>
+<link href="${BASE_PATH}/assets/media/extcss/bootstrap-combined.min.css" rel="stylesheet">
+<link href="${BASE_PATH}/assets/media/extcss/layoutit.css" rel="stylesheet">
+<link href="${BASE_PATH}/assets/media/extcss/m.css" rel="stylesheet" type="text/css"/>
+
+<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+		<script src="js/html5shiv.js"></script>
+	<![endif]-->
+
+	<!-- Fav and touch icons -->
+	<link rel="shortcut icon" href="${BASE_PATH}/assets/media/img/favicon.png">
+	<style>
+	.edit .demox {
+    margin-left: 0px;
+    margin-top: 10px;
+    padding: 20px 15px 5px 15px;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px; 
+    word-wrap: break-word;
+}
+	</style>
+</head>
+<%
+	var XPATH=BASE_PATH+"/assets/media";
+%>
+<body style="min-height: 660px; cursor: auto;margin-left:0px;" class="edit">
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container-fluid">
+      <button data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar" type="button">
+	  <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+      <a class="brand"><img src="${XPATH}/img/favicon.png"> XEDIT编辑器</a>
+      <div class="nav-collapse collapse">
+      	<ul class="nav" id="menu-layoutit">
+          <li class="divider-vertical"></li>
+          <li>
+             
+            <div class="btn-group">
+			
+	<%
+	if(isEmpty(fpath)){
+		fpath="";
+	}
+  %>
+   <input id="input_aimpath" type="hidden" value="${fpath}" ></input>
+			
+              <button type="button" class="btn btn-primary"  id="bt_savexedit">
+					<i class="icon-share  icon-white"></i>保存</button>
+               
+            </div> 
+          </li>
+        </ul>
+        <ul class="nav pull-right">
+               	  <li>
+               	  <div class="btn-group">
+               	  </div>
+			      </li>
+          </ul>
+      </div>
+      <!--/.nav-collapse --> 
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="row-fluid">
+     
+    <!--/span-->
+    <div class="demox ui-sortable" style="min-height: 304px;    position: null; ">
+        <textarea id="contenteditor"></textarea> 
+    </div>
+    <!-- end demo -->
+    <!--/span-->
+    <div id="download-layout">
+      <div class="container-fluid"></div>
+    </div>
+  </div>
+  <!--/row--> 
+</div>
+<!--/.fluid-container-->   
+	<script type="text/javascript" src="${BASE_PATH}/assets/media/js/jquery-2.0.0.min.js"></script>
+	<!--[if lt IE 9]>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<![endif]-->
+<script type="text/javascript" src="${BASE_PATH}/assets/media/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${BASE_PATH}/assets/media/js/jquery-ui.js"></script>
+<script type="text/javascript" src="${BASE_PATH}/assets/media/js/jquery.ui.touch-punch.min.js"></script>
+<script type="text/javascript" src="${BASE_PATH}/assets/media/js/jquery.htmlClean.js"></script>
+<script type="text/javascript" src="${BASE_PATH}/assets/media/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="${BASE_PATH}/assets/media/ckeditor/config.js"></script>
+
+<script type="text/javascript" src="${BASE_PATH}/assets/media/extjs/API.js"></script>
+<script type="text/javascript" src="${BASE_PATH}/assets/media/extjs/config.js"></script>
+
+ 
+<%
+
+var errmsg="";
+	if(isEmpty(fpath)){
+		errmsg ="没有传入需要编辑的文件模板路径";
+		
+%>
+<script>
+var editTemplate="${errmsg}";
+</script>
+<%	
+		
+	} else{ 
+		try{
+			var editTemplate=FileUtils.getFileContent(fpath);
+			var jsTemplate=JavaScriptUtils.getJavaScript(editTemplate);
+			  
+			 
+%>
+<script>
+	var editTemplateS = ${jsTemplate}; 
+	var editTemplate=editTemplateS[0];
+	 
+</script>
+<%
+	}catch(except){
+		  errmsg=except+"";
+%>
+<script>
+var editTemplate="${errmsg}";
+</script>
+<%	
+		}
+	} 
+%>  
+
+
+<script>
+
+
+$(document).ready(function() {
+	$("#contenteditor").val(editTemplate);
+	
+	$("#bt_savexedit").click(function(e) {
+		e.preventDefault();  
+		var webHtml=	$("#contenteditor").val();	  
+			var params={} ;
+			 params.fpath=$("#input_aimpath").val();  
+			 params.tempateWebhtml=webHtml;  
+			 
+			var req = ReqUtils.create(APIRest.saveLayoutTemplate(),params,
+					function(result, data, p2, p3) {
+						if (result == 0) { 
+							  
+							return;
+						}
+						if (result == 1) { 
+							 
+							return;
+						} 
+			});
+			req.get();
+		
+		
+		
+	});
+	
+});
+</script>
+    
+</body>
+</html>

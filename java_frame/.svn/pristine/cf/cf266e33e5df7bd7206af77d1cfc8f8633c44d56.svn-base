@@ -1,0 +1,35 @@
+ <%
+ 		include(FRONT,{data:"",FLAG:11056}){ } 
+ %>
+<div class="layui-container">  
+	<%
+		 layout(DIV,{class:"layui-row"}){ 
+		 	layout(DIV,{class:"layui-col-xs6"}){ 
+		 		layout(DIV,{class:"grid-demo grid-demo-bg1"}){ 
+		 			print("6/12");
+		 		} 
+		 	}  
+		 	layout(DIV,{class:"layui-col-xs6"}){ 
+		 		layout(DIV,{class:"grid-demo"}){ 
+					 print("6/12");
+		 		} 
+		 	} 
+		 }
+		 layout(DIV,{class:"layui-row"}){ 
+		 	layout(DIV,{class:"layui-col-xs6"}){ 
+		 		layout(DIV,{class:"grid-demo"}){ 
+		 			
+		 		} 
+		 	}  
+		 	layout(DIV,{class:"layui-col-xs6"}){ 
+		 		layout(DIV,{class:"grid-demo grid-demo-bg1"}){ 
+		 			print("6/12");
+		 		} 
+		 	}   
+		 }
+	%> 
+</div> 
+<% 
+	include("include_end.html"){ } 
+%>  
+ 

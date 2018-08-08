@@ -1,0 +1,25 @@
+<%
+ 	 
+ 	 if(isEmpty(data)){
+ 	 	data="";
+ 	 }
+ 	 include(INCLUDE_FRONT,{TITLE:"预览页面",data:data,FLAG:11056}){ } 
+ 	 
+ %>
+  
+<% 
+var formJson=	FileUtils.getFromFileContent("/"+id); 
+var frmJson=JavaScriptUtils.getJavaScript(formJson);
+	
+ 	if(!isEmpty(frmJson)){
+	 	for(formItem in frmJson){   
+		 	 //直接输出内容
+		 	 println(formItem.control_html);
+		 	 
+	 	} 
+ 	}else{
+ 		println("");
+ 	}
+	include(INCLUDE_END){ } 
+%>  
+ 

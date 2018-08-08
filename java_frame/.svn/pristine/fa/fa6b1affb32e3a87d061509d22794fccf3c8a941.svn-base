@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+
+<!-- BEGIN HEAD -->
+
+<head>
+
+<meta charset="utf-8" />
+
+<title>Metronic | Login Page</title>
+
+<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+<meta content="" name="description" />
+
+<meta content="" name="author" />
+
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+
+<link href="${BASE_PATH}/assets/media/css/bootstrap.min.css"
+	rel="stylesheet" type="text/css" />
+
+<link rel="shortcut icon"
+	href="${BASE_PATH}/assets/media/image/favicon.ico" />
+
+</head>
+<body>
+	首页-start-X
+	<button type="button" class="btn red">Buy Now!</button>
+
+	<% 
+		var webRoot=FileUtils.getWebRoot(); 
+		print(webRoot);  
+	%>
+</body>
+</html>

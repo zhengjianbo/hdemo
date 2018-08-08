@@ -1,0 +1,27 @@
+
+            document.onclick = function (event) {
+                try
+                {
+                    var _event = event ? event : window.event;
+                    var _target = _event.target ? _event.target : _event.srcElement;
+                    var className = "";
+                    while (className != "app_body") {
+                        className = _target.className;
+                        if (className == undefined || className.indexOf("notclose") > 0) {
+                            break;
+                        }
+                        _target = _target.parentNode;
+                        if (_target == null) {
+                            break;
+                        }
+                    }
+                    if (className != undefined && className.indexOf("notclose") < 0 && _target != null) {
+                        $(".field_option").animate({ right: -240, speed: 2000 });
+                        $("#app_layout_list .lr-compont-item ").removeClass('active').removeClass('activeerror');
+                    }
+                }
+                catch(e)
+                {
+                    
+                }
+            };

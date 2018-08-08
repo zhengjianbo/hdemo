@@ -1,0 +1,37 @@
+<% 
+var data="1";
+	 	include("include_front.html",{data:"",FLAG:11056}){ } 
+%>
+----------------  
+<%
+	if(!isEmpty(sid)){
+		println(sid);
+	}
+%>
+--------	UVIEW INDEX 
+	<% 
+		include("include_plugin.html",{id:"label_show",data:"XX",value:"显示Label",placefolder:"请选择",showAll:"全部",ptype:"组件类型"}){} 
+%> 
+
+<%#ajax userInfo: {  %>
+        <a href="#">注册</a>
+          
+<%   } 
+ 
+ layout("/uview/plugin/include_plugin_div.html",{}){ 
+ 	//div里面 label 
+ 	layout("/uview/plugin/include_plugin_label.html",{}){  
+ %>
+ 内部内容
+ <%
+	} 
+}
+%>		
+	后续内容
+<% 
+		include("include_end.html"){ } 
+%>  
+	
+	
+	
+	

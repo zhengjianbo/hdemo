@@ -1,0 +1,39 @@
+<!-- 单选按钮组    -->
+ 
+ <%
+	 if(isEmpty(id)){
+		id="";
+	}
+	if(isEmpty(name)){
+		name="";
+	}
+	if(isEmpty(class)){
+		class="";
+	} 
+	if(isEmpty(value)){
+		value="";
+	} 
+	
+	if(!isEmpty(item)){
+		 id=item.control_field_id; 
+		 col_md=item.control_layout; 
+		 //data.维度值
+		 value=item.control_value; 
+	} 
+	if(isEmpty(name)){
+		name=id;
+	}
+%>
+
+
+<div class="${class} ${col_md}">
+		<%
+			//循环值
+			for(var i=0;i<10;i++){
+		%>
+			<input id="${id}"  name="${name}"  type="radio" value="${i}" />${i} 
+		<%
+			}
+		%>
+</div>
+​

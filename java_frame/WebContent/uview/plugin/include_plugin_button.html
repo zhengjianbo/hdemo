@@ -1,0 +1,30 @@
+<!--  button  -->
+<%
+	 if(isEmpty(id)){
+		id="";
+	}
+	if(isEmpty(name)){
+		name="";
+	}
+	if(isEmpty(class)){
+		class="";
+	} 
+	if(isEmpty(value)){
+		value="";
+	} 
+	if(isEmpty(type)){
+		type="input";
+	} 
+	var style="";
+	if(!isEmpty(item)){
+		 id=item.control_field_id;
+		 value=item.control_value;
+		 style=item.control_style;
+		 col_md=item.control_layout;
+	} 
+	if(isEmpty(name)){
+		name=id;
+	}
+%>
+<a id="${id}" id="${id}"  class="btn btn-success ${col_md}" onclick="finishbtn();">保存</a>
+

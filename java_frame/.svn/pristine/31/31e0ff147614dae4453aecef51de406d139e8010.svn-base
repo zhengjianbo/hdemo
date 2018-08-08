@@ -1,0 +1,14 @@
+<div class="lyrow ui-draggable" style="display: block;"> <a href="#close" class="remove label label-important"><i class="icon-remove icon-white"></i>删除</a> <span class="drag label"><i class="icon-move"></i>拖动</span>
+              <div class="preview">
+                <input value="12" type="text">
+              </div>
+              <div class="view">
+                <div class="row-fluid clearfix">
+                  <div class="span12 column ui-sortable"><div class="box box-element ui-draggable" style="display: block;"> <a href="#close" class="remove label label-important"><i class="icon-remove icon-white"></i>删除</a> <span class="drag label"><i class="icon-move"></i>拖动</span>
+              <span class="configuration"><button type="button" class="btn btn-mini" data-target="#editorModal" role="button" data-toggle="modal">编辑</button></span>
+              <div class="preview">内容块</div>
+              <div class="view">${html}</div>
+            </div></div>
+                </div>
+              </div>
+            </div>

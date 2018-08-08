@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="NEW_FRAME">
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/kettle"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/debug"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/server"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/jfinal"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/beetl"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/cron"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/push"/>
+        <property name="java-output-path" value="/NEW_FRAME/build/classes"/>
+        <property name="context-root" value="NEW_FRAME"/>
+    </wb-module>
+</project-modules>

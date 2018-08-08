@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sharedobjects>
+ <connection>
+    <name>DATATEST_READER</name>
+    <server>172.16.86.41</server>
+    <type>ORACLE</type>
+    <access>Native</access>
+    <database>DATATEST</database>
+    <port>1521</port>
+    <username>reader</username>
+    <password>reader</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>INITIAL_POOL_SIZE</code><attribute>5</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>MAXIMUM_POOL_SIZE</code><attribute>30</attribute></attribute>
+      <attribute><code>POOLING_initialSize</code><attribute>5</attribute></attribute>
+      <attribute><code>POOLING_maxActive</code><attribute>8</attribute></attribute>
+      <attribute><code>POOLING_maxIdle</code><attribute>3</attribute></attribute>
+      <attribute><code>POOLING_maxWait</code><attribute>10000</attribute></attribute>
+      <attribute><code>POOLING_minIdle</code><attribute>0</attribute></attribute>
+      <attribute><code>POOLING_testOnBorrow</code><attribute>false</attribute></attribute>
+      <attribute><code>POOLING_testOnReturn</code><attribute>false</attribute></attribute>
+      <attribute><code>POOLING_testWhileIdle</code><attribute>true</attribute></attribute>
+      <attribute><code>POOLING_timeBetweenEvictionRunsMillis</code><attribute>60000</attribute></attribute>
+      <attribute><code>POOLING_validationQuery</code><attribute>select 1</attribute></attribute>
+   	  <attribute><code>POOLING_defaultAutoCommit</code><attribute>false</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>1521</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>SQL_CONNECT</code><attribute>select 1</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>Y</attribute></attribute>
+    </attributes>
+  </connection>
+  <connection>
+    <name>DATATEST_ETL_HQ</name>
+    <server>172.16.86.41</server>
+    <type>ORACLE</type>
+    <access>Native</access>
+    <database>DATATEST</database>
+    <port>1521</port>
+    <username>ETL_HQ</username>
+    <password>Encrypted 2be98afc86aa7f2e4cb1cba7cea97bcce</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>INITIAL_POOL_SIZE</code><attribute>5</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>MAXIMUM_POOL_SIZE</code><attribute>30</attribute></attribute>
+      <attribute><code>POOLING_initialSize</code><attribute>5</attribute></attribute>
+      <attribute><code>POOLING_maxActive</code><attribute>8</attribute></attribute>
+      <attribute><code>POOLING_maxIdle</code><attribute>3</attribute></attribute>
+      <attribute><code>POOLING_maxWait</code><attribute>10000</attribute></attribute>
+      <attribute><code>POOLING_minIdle</code><attribute>0</attribute></attribute>
+      <attribute><code>POOLING_testOnBorrow</code><attribute>false</attribute></attribute>
+      <attribute><code>POOLING_testOnReturn</code><attribute>false</attribute></attribute>
+      <attribute><code>POOLING_testWhileIdle</code><attribute>true</attribute></attribute>
+      <attribute><code>POOLING_timeBetweenEvictionRunsMillis</code><attribute>60000</attribute></attribute>
+      <attribute><code>POOLING_validationQuery</code><attribute>select 1</attribute></attribute>
+      <attribute><code>POOLING_defaultAutoCommit</code><attribute>false</attribute></attribute>
+       <attribute><code>PORT_NUMBER</code><attribute>1521</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>SQL_CONNECT</code><attribute>select 1</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>Y</attribute></attribute>
+    </attributes>
+  </connection>
+  <connection>
+    <name>CPSS</name>
+    <server>123.57.154.28</server>
+    <type>MSSQL</type>
+    <access>Native</access>
+    <database>HCSCRMDB</database>
+    <port>1433</port>
+    <username>cpss</username>
+    <password>Encrypted 2be98afc86aa7f2e4cb1abe63cdcaf782</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>MSSQL_DOUBLE_DECIMAL_SEPARATOR</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>1433</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
+</sharedobjects>
