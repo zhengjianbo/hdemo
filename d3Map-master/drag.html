@@ -1,0 +1,92 @@
+
+<!DOCTYPE HTML>
+<html>
+  <head>
+    
+    <script type="text/javascript">
+    var x=0;
+    var y=0;
+    var x2=0;
+    var y2=0;
+    var flag=false;
+    function cnvs_getCoordinates(e)
+    {
+    
+    tempx=e.offsetX;
+    tempy=e.offsetY;
+    
+    if(flag){
+    	if(tempx>(x-25)&&tempx<(x+25)&&tempy>(y-25)&&tempy<(y+25)){
+    		x=x2+tempx;
+    		y=y2+tempy;
+    if(x>90&&x<100&&y>90&&y<100)
+    	{
+    	document.getElementById("xycoordinates").innerHTML="特定区域,可用于触发其它事件";
+    	}
+    else{
+ 
+    document.getElementById("xycoordinates").innerHTML="Coordinates: (" + tempx + "," + tempy + ")";
+    REMS(x,y);
+    }
+ 
+    	}
+    }
+    }
+    function InitCanvas(){
+    	x=Math.random()*450+25;
+    	y=Math.random()*450+25;
+    	REMS(x,y);
+    	
+    	
+    }
+    
+    
+    
+    function REMS(a,b){
+    	var c=document.getElementById("ls");
+    	var cxt=c.getContext("2d");
+    	
+    	cxt.clearRect(0,0,500,500);
+    	cxt.fillStyle="#FF0000";
+    	cxt.fillRect(a-25,y-25,50,50);
+    }
+    
+    
+    function T1(e){
+    	flag=true;
+    	tempx=e.offsetX;
+        tempy=e.offsetY;
+        if(tempx>(x-25)&&tempx<(x+25)&&tempy>(y-25)&&tempy<(y+25)){
+    	x2=x-tempx;
+        y2=y-tempy;
+        }
+    	
+    }
+    function F1(){
+    	flag=false;
+    }
+ 
+    </script>
+    
+    
+    <title>My JSP 'MyJsp.jsp' starting page</title>
+    
+ 
+	<!--
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	-->
+ 
+  </head>
+  
+  <body>
+    This is my JSP page2. <br>
+    <button onclick="InitCanvas()">TestInit</button>
+    <div id="xycoordinates"></div>
+    <hr>
+    <canvas height="500" width="500" id="ls" onmousemove="cnvs_getCoordinates(event)" onmousedown="T1(event)" onmouseup="F1()" onmouseout="F1()"></canvas>
+    
+    
+    
+    <hr>
+  </body>
+</html>

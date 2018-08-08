@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<meta charset="utf-8">
+<body>
+<script src="lib/d3.v4.min.js"></script>
+<script src="lib/topojson.v1.min.js"></script>
+<script>
+
+    var width = 480,
+        height = 600;
+		var per=0.5;
+	var menu_y=600-120;	
+		
+
+    var projection = d3.geoMercator()
+            .center([100, 37])
+            .scale(850)
+            .translate([width/2, height/2]);
+
+    var canvas = d3.select("body").append("canvas")
+            .attr("width", width)
+            .attr("height", height);
+
+    var transform = d3.zoomIdentity;
+	//transform.k=0.1; 
+    //当地图缩放后，获得缩放变换，重新渲染地图
+    function zoomed() {
+        transform = d3.event.transform;
+        render();
+    }
+
+    var context = canvas.node().getContext("2d");
+	context.lineWidth=2;
+       //   context.globalAlpha=0.3; 
+    //给地图添加缩放范围和监听事件
+    canvas
+            .call(d3.zoom().scaleExtent([1, 5]).on("zoom", zoomed));
+
+    var mapColor =d3.scaleOrdinal(d3.schemeCategory20);
+    var countries =null;
+  
+   function render() {
+        context.save();
+		 context.beginPath(); 
+		// 清理上次位置
+        context.clearRect(0, 0, width, height);
+		console.log("-=-x:"+transform.x);
+		 context.translate(transform.x, transform.y);
+        context.scale(transform.k, transform.k);
+		
+		 	//背景颜色
+        context.beginPath();
+		//context.globalAlpha=1; 
+		context.fillStyle= "#FFF";;
+		  context.strokeStyle= "#eee";	
+		  
+		  
+     //   context.fillRect(10, 10, width-10, height-10); 
+		  
+		 for(var i=0;i<5;i++){		 
+		//	context.lineWidth=i+1;
+		//  context.strokeRect(9+10*context.lineWidth, 9, width-11, height-11-2*context.lineWidth);
+		}
+		context.lineWidth=1;
+		  context.strokeRect(9+10*context.lineWidth+per, 9+per, width-11+per, height-11-2*context.lineWidth+per);
+		
+	//线条	
+	context.strokeStyle= "#dedede";
+context.lineWidth=1;	
+		 context.beginPath();
+    context.moveTo(10+per, 10+per);
+    context.lineTo(width-10+per, height-10+per); 
+	
+//	context.moveTo(100.5,100.5);
+//context.lineTo(200.5,100.5);
+//context.lineTo(200.5,200.5);
+//context.lineTo(100.5,200.5);
+//context.lineTo(100.5,100.5);
+	
+context.stroke();           
+	context.closePath();
+	  
+		
+		
+		//context.globalAlpha=0.3; 
+       
+         
+	  // drawMapPath("21");
+	   drawTriangle(context,1,1,100,1,300,300,"#d62728","fill"); 
+	   // drawCircle(context,100,100, 100, 0, 360, "81", "fill");
+	  // drawCircleRect(context,100,100, 100, 0, 360, "22", "fill");
+	   
+ drawPolygon(context, {
+    num: 6,
+    r: 100,
+    strokeStyle: 'blue',
+    fillStyle: '#9da'
+})
+ 
+drawPolygon(context, {
+    num: 4,
+    r: 150,
+    strokeStyle: 'red',
+    width: 4
+})
+ 
+drawPolygon(context, {
+    x: 800,
+    y: 250,
+    num: 10,
+    fillStyle: '#000'
+})
+	   
+       // context.stroke();
+      //  context.fill();
+        context.restore(); 
+		//画船和艇
+		
+    }
+
+    function drawMapPath(cid) {
+        context.beginPath();
+        var color = mapColor(parseInt(cid) );
+		 
+        context.fillStyle= color;
+        context.strokeStyle=color;
+		//context.globalAlpha=0.3;						
+        
+        context.stroke();
+        context.fill();
+    }
+	//参数解释：x1(2、3),y1(2、3)-三角形的三个点的坐标；color-绘制颜色；type-绘制类型（'fill'和'stroke'）。
+var drawTriangle  = function(ctx,x1, y1, x2, y2, x3, y3, color, type) {
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.lineTo(x3, y3);
+	ctx.closePath();
+	  ctx.fillStyle= color;
+        ctx.strokeStyle="#FF0000";
+	ctx.stroke();
+        ctx.fill();
+   // 
+    //ctx[type]();
+}
+//绘制圆形 x,y-圆心；r 半径 start-起始角度；end-结束角度；cid-绘制颜色；type-绘制类型（'fill'和'stroke'）。
+var drawCircle = function(ctx,x, y, r, start, end, cid, type) {
+    var unit = Math.PI / 180;
+    ctx.beginPath();
+    ctx.arc(x, y, r, start * unit, end * unit);
+	 var color = mapColor(parseInt(cid) );
+    ctx[type + 'Style'] = color;
+    ctx.closePath();
+    ctx[type]();
+}
+
+var drawPolygon = function(ctx, conf){
+    var x = conf && conf.x || 0;  //中心点x坐标
+    var y = conf && conf.y || 0;  //中心点y坐标
+    var num = conf && conf.num || 3;   //图形边的个数
+    var r = conf && conf.r || 100;   //图形的半径
+    var width = conf && conf.width || 5;
+    var strokeStyle = conf && conf.strokeStyle;
+    var fillStyle = conf && conf.fillStyle;
+    //开始路径
+    ctx.beginPath();
+    var startX = x + r * Math.cos(2*Math.PI*0/num);
+    var startY = y + r * Math.sin(2*Math.PI*0/num);
+    ctx.moveTo(startX, startY);
+    for(var i = 1; i <= num; i++) {
+        var newX = x + r * Math.cos(2*Math.PI*i/num);
+        var newY = y + r * Math.sin(2*Math.PI*i/num);
+        ctx.lineTo(newX, newY);
+    }
+    ctx.closePath();
+    //路径闭合
+    if(strokeStyle) {
+        ctx.strokeStyle = strokeStyle;
+        ctx.lineWidth = width;
+        ctx.lineJoin = 'round';
+        ctx.stroke();
+    }
+    if(fillStyle) {
+        ctx.fillStyle = fillStyle;
+        ctx.fill();
+    }
+}
+//绘制（圆角）矩形
+//参数解释：x,y-左上角点的坐标；width、height-宽高；radius-圆角；color-绘制颜色；type-绘制类型（'fill'和'stroke'）。
+var drawCircleRect = function(ctx,x, y, width, height, radius, cid, type){
+    ctx.beginPath();
+    ctx.moveTo(x, y+radius);
+    ctx.lineTo(x, y+height-radius);
+    ctx.quadraticCurveTo(x, y+height, x+radius, y+height);
+    ctx.lineTo(x+width-radius, y+height);
+    ctx.quadraticCurveTo(x+width, y+height, x+width, y+height-radius);
+    ctx.lineTo(x+width, y+radius);
+    ctx.quadraticCurveTo(x+width, y, x+width-radius, y);
+    ctx.lineTo(x+radius, y);
+    ctx.quadraticCurveTo(x, y, x, y+radius);
+	
+	 var color = mapColor(parseInt(cid) );
+	
+    ctx[type + 'Style'] = color ;
+    ctx.closePath();
+    ctx[type]();
+}
+	
+	
+	var button=function(ctx,title,x,y,width,height){
+			var strokeStyle = "#";
+			var fillStyle =  "#";
+			//开始路径
+			ctx.beginPath();
+				ctx.fillStyle = fillStyle;
+				ctx.fill();	
+					
+					ctx.strokeStyle = strokeStyle;
+				ctx.lineWidth = width;
+				ctx.lineJoin = 'round';
+				ctx.stroke();
+	}
+	
+		render();
+		
+		
+		
+		
+</script>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>电子宣传栏——报表内容编辑</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="css/layui.css"  media="all">
+  <link rel="stylesheet" href="css/global.css"  media="all">
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+  
+  <script src="www/js/echarts.js"></script>
+  <!--  -->
+ <script src="asset/js/codemirror.js"></script>
+ 
+<script src="asset/js/javascript.js"></script>
+<link href="asset/css/font-awesome.min.css" rel="stylesheet">
+    <link href="asset/css/bootstrap.css" rel="stylesheet">
+    <link href="asset/css/carousel.css" rel="stylesheet">
+    <link href="asset/css/echartsHome.css" rel="stylesheet">
+    <link href="asset/css/codemirror.css" rel="stylesheet">
+    <link href="asset/css/monokai.css" rel="stylesheet">
+	
+</head>
+<body >
+
+<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+<!--[if lt IE 9]>
+  <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+  <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->          
+    <div class="fly-header layui-bg-black"> <div class="layui-container">
+
+
+
+<ul class="layui-nav">
+  <li class="layui-nav-item"><a href="">电子宣传栏-图形编辑</a></li>
+  
+	  
+</ul>
+   </div>
+   </div>
+    <div id="sidebar-code" class="well sidebar-nav hide">
+                    <div class="nav-header"><a href="#" onclick="autoResize()" class="glyphicon glyphicon-resize-full" id ="icon-resize" ></a>option</div>
+                    <textarea id="code" name="code">
+option = {
+    title : {
+        text: '某地区蒸发量和降水量',
+        subtext: '纯属虚构'
+    },
+    tooltip : {
+        trigger: 'axis'
+    },
+    
+  // toolbox: {
+  //     show : true,
+  //     feature : {
+  //         mark : {show: true},
+  //         dataView : {show: true, readOnly: false},
+  //         magicType : {show: true, type: ['line', 'bar']},
+  //         restore : {show: true},
+  //         saveAsImage : {show: true}
+  //     }
+  // },
+    calculable : true,
+    xAxis : [
+        {
+            type : 'category',
+            data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value'
+        }
+    ],
+    series : [
+        {
+            name:'蒸发量',
+            type:'bar',
+            data:[211.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
+            markPoint : {
+                data : [
+                    {type : 'max', name: '最大值'},
+                    {type : 'min', name: '最小值'}
+                ]
+            },
+            markLine : {
+                data : [
+                    {type : 'average', name: '平均值'}
+                ]
+            }
+        },
+        {
+            name:'降水量',
+            type:'bar',
+            data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3],
+            markPoint : {
+                data : [
+                    {name : '年最高', value : 182.2, xAxis: 7, yAxis: 183, symbolSize:18},
+                    {name : '年最低', value : 2.3, xAxis: 11, yAxis: 3}
+                ]
+            },
+            markLine : {
+                data : [
+                    {type : 'average', name : '平均值'}
+                ]
+            }
+        }
+    ]
+};
+                    </textarea>
+              </div>
+<form class="layui-form" >
+
+   
+   <div class="layui-container fly-marginTop layui-form-item"> 
+	<div class="layui-row ">
+		<div class="layui-col-xs6">
+		    <div class="layui-form-item" style="padding-top:15px;">
+				<div class="layui-inline">
+				  <label class="layui-form-label">名称</label>
+				  <div class="layui-input-inline">
+					 <input type="text" name="input_name" lay-verify="title" autocomplete="off" placeholder="请输入名称" class="layui-input">
+				  </div>
+				</div>
+			</div>
+			<div class="layui-form-item" >
+				<div class="layui-inline">
+				  <label class="layui-form-label">图形类型</label>
+				  <div class="layui-input-inline">
+					<select name="select_screentype">
+					  <option value="">选择类型</option>
+					  
+						<option value="6,6">柱状图</option>
+						<option value="3,9">线状图</option>
+						<option value="3,9">饼状图</option>
+					  
+					</select>
+				  </div>
+				</div>
+			</div>
+		</div>
+		<div class="layui-col-xs6">
+		  <div>显示图形</div>
+		  <div style="line-height:150px" >
+					<div id="graphic">
+						<div id="main" class="main"></div>
+						<div class="layui-form-item">
+							 
+							<button type="button" class="btn btn-sm btn-success" onclick="refresh(true)">刷 新</button>
+							 <span class="text-primary">切换主题</span>
+							<div class="layui-input-block"> <select id="theme-select"></select> 
+							 <span id='wrong-message' style="color:red"></span>
+							</div>
+						</div>
+					</div> 
+		  </div>
+		</div>
+	  </div>
+    
+   </div>
+   
+</form>
+
+<div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn" >保存</button>  
+	  <button class="layui-btn" >预览</button>
+    </div>
+  </div>
+ 
+	<script src="asset/js/jquery.min.js"></script>
+    
+    <script src="asset/js/echartsExample.js"></script>
+	
+<script src="layui.all.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+	layui.use(['form', 'layedit', 'laydate'], function(){
+  var form = layui.form
+  ,layer = layui.layer
+  ,layedit = layui.layedit
+  ,laydate = layui.laydate;
+  
+  
+});
+</script>
+
+</body>
+</html>
