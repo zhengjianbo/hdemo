@@ -1,0 +1,16 @@
+body {
+    background-color: #FFF8DC;
+    text-align: center;
+}
+
+#canvas {
+    background-color: #F5F5DC;
+    border: 10px solid #aaaaaa;
+}
+
+button {
+    width: 100px;
+    height: 40px;
+    margin-top: 50px;
+}
+
