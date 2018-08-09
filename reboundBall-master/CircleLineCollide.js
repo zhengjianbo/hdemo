@@ -5,13 +5,13 @@ function isLeft(a, b, c) {
 
 //根据时间间隔更新p1
 function updateObjPosByTime(v, delta) {
-    v.vx = v.vx * delta
-    v.vy = v.vy * delta
+    v.vx = v.vx * delta;
+    v.vy = v.vy * delta;
 
     v.p1 = {x: v.p0.x + v.vx, y: v.p0.y + v.vy}
     v.len = Math.sqrt(v.vx*v.vx + v.vy*v.vy)
 
-    v.delta = delta
+    v.delta = delta;
 }
 
 //更新向量
@@ -92,27 +92,4 @@ function getProjectVector(u, dx, dy) {
 	return {vx:dp*dx, vy:dp*dy};
 }
 
-//球所在位置
-var cv = {r:20,p0:{x:200,y:100},vx:100, vy:100};
-
-var walls = [{p0:{x:0,y:0}, p1:{x:400,y:0}, bf:1, wf:1},
-              {p0:{x:400,y:0}, p1:{x:400,y:220}, bf:1, wf:1},
-              {p0:{x:400,y:220}, p1:{x:0,y:220}, bf:1, wf:1},
-              {p0:{x:0,y:220}, p1:{x:0,y:0}, bf:1, wf:1}];
-
-for(var i = 0; i < walls.length; ++i) {
-    updateVector(walls[i], true);
-}
-
- 
-    var nowTime = new Date().getTime();
-    var delta = (nowTime - lastTime) / 1000;
-    lastTime = nowTime;
-    updateObjPosByTime(cv, delta);
-    checkWalls(cv, walls);
-    circle.x = cv.p1.x;
-    circle.y = cv.p1.y;
-    cv.p0 = cv.p1;
-    cv.vx /= cv.delta;
-    cv.vy /= cv.delta;
 
