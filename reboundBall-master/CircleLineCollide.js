@@ -105,5 +105,14 @@ for(var i = 0; i < walls.length; ++i) {
 }
 
  
-  
+    var nowTime = new Date().getTime();
+    var delta = (nowTime - lastTime) / 1000;
+    lastTime = nowTime;
+    updateObjPosByTime(cv, delta);
+    checkWalls(cv, walls);
+    circle.x = cv.p1.x;
+    circle.y = cv.p1.y;
+    cv.p0 = cv.p1;
+    cv.vx /= cv.delta;
+    cv.vy /= cv.delta;
 

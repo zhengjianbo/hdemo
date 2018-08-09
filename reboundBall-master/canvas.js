@@ -18,20 +18,7 @@ var  DistanceFromPointToLine=function(   x,   y,   x1,   y1,   x2,   y2)
  
 	return Math.abs(a * x + b * y + c) / Math.sqrt(a * a + b * b);
 }
- 
-// 圆与线条碰撞检测
-// 圆心(x, y), 半径r,  开始点 结束点  线条
-var  IsCircleIntersectRectangle=function(  x,   y,   r,    x1,    y1,    x2,    y2)
-{
-	var  w1 = DistanceBetweenTwoPoints(x1, y2, x2, y2); 
-	 
-	var  w2 = DistanceFromPointToLine(x, y, x1, y1, x2, y2); 
- 
-	if (w2 > r)
-		return false;
-	 
-	return true;
-}
+  
 
 var IsCircleIntersectLineSeg=function (   x,    y,    r,    x1,    y1,    x2,    y2)
 {
@@ -86,10 +73,7 @@ var p0y=100;
  var p1x=200;
  var p1y=100;
 var px=(p1x-p0x)/2+p0x;
-var py=(p1y-p0y)/2+p0y; 
-
-//var isIntersect=IsCircleIntersectRectangle(100,100,50,px,py,p1x,p1y,px,py)
-//	console.log("isIntersect:"+isIntersect);
+var py=(p1y-p0y)/2+p0y;  
 	
 	 canvas.onmousedown = function(ev){
                 var ev=ev || window.event;

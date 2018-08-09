@@ -53,27 +53,72 @@
 <!-- 			<ul class="layui-tab-title"> <li class="layui-this">登入</li> <li><a href="/user/reg/">注册</a></li> </ul> 
 -->
 			
-				<div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;"> <div class="layui-tab-item layui-show"> <div class="layui-form layui-form-pane"> <form > <div class="layui-form-item"> <label for="L_email" class="layui-form-label">用户名</label> <div class="layui-input-inline"> 
+				<div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;"> <div class="layui-tab-item layui-show"> <div class="layui-form layui-form-pane">
+
+				<form class="layui-form" action="#" lay-filter="xexample">
+					<div class="layui-form-item"> <label for="L_email" class="layui-form-label">用户名</label> <div class="layui-input-inline"> 
 							<input type="text" id="L_loginName" name="loginName" required="" lay-verify="required" autocomplete="off" class="layui-input"> </div> 
 							</div> 
 							<div class="layui-form-item"> <label for="L_pass" class="layui-form-label">密码</label> 
 							<div class="layui-input-inline"> <input type="password" id="L_pass" name="pass" required="" lay-verify="required" autocomplete="off" class="layui-input"> </div> </div> 
 						 
 							
-							<div class="layui-form-item"> <button class="layui-btn" lay-filter="*" lay-submit="">立即登录</button>  </div>
+							<div class="layui-form-item"> <button class="layui-btn" lay-filter="login" lay-submit="">立即登录</button>  </div>
 
 				</form> </div> </div> </div> 
 				
 				
 				</div> </div></div>
    
-	
- 
-          
+      
 <script src="layui.all.js" charset="utf-8"></script>
+<script src="asset/js/jquery.min.js" charset="utf-8"></script>	
+<script src="Content/API.js" charset="utf-8"></script>	 
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
-<script>
-	//处理登录
+ <script>
+ 
+ 
+ 
+layui.use(['form', 'layedit', 'laydate'], function(){
+  var form = layui.form
+  ,layer = layui.layer
+  ,layedit = layui.layedit
+  ,laydate = layui.laydate;
+    
+	
+	var ajaxLoad =function(fields){ 
+		var requestUrl= ''; //配置 
+		function inner_showdata(data) {  
+			if(Const.isEmpty(data)){ 
+				AlertBox("失败");
+				return;
+			}
+			AlertBox(data.MESSAGE);
+			if(data.RESULT){  
+				return;
+			}  
+		}  
+		var params={};
+		var req = ReqUtils.create(requestUrl, params, function(result,
+				p1, p2, p3) {
+			if (result == 0) { 
+				AlertBox("操作失败!");
+				return;
+			}
+			if (result == 1) {  
+				inner_showdata(p1);  
+			}
+		}); 
+		 req.get(); 
+	} 
+  //监听提交
+  form.on('submit(login)', function(data){ 
+			ajaxLoad(data.fields);
+            return false;
+  });
+  
+   
+});
 </script>
 
 </body>

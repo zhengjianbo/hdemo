@@ -1,6 +1,10 @@
 * {
     font-family: "Microsoft YaHei";
 }
+.hide{
+	 display:none;
+	
+}
 .CodeMirror * {
     font-family: sans-serif;
 }
@@ -8,8 +12,7 @@ html {
     background-color: rgb(6, 19, 37);
 }
 body {
-  padding-top: 50px;
-  padding-bottom: 0;
+    padding-bottom: 0;
   background-color: rgb(247, 247, 247);
 }
 body p {
