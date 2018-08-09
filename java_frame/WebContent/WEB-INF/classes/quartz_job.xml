@@ -20,6 +20,8 @@
 	</processing-directives>
 
 	<schedule>
+		<!-- 时间 定时 显示到大屏幕上 
+		-->
 		<job>
 			<name>Cache_JOB</name>
 			<job-class>com.ram.quartz.job.CacheJob</job-class>
