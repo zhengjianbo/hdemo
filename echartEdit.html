@@ -140,15 +140,31 @@ option = {
 				  </div>
 				</div>
 			</div>
+						
+			<div class="layui-form-item" >
+				<div class="layui-inline">
+				  <label class="layui-form-label"></label>
+				  <div class="layui-input-inline">
+					 
+				  </div>
+				</div>
+			</div>		
+			
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+				  <button class="layui-btn" >保存</button>  
+				  <button class="layui-btn" >预览</button>
+				</div>
+			  </div>
 		</div>
 		<div class="layui-col-xs6">
 		  <div>显示图形</div>
 		  <div style="line-height:150px" >
 					<div id="graphic">
 						<div id="main" class="main"></div>
-						<div class="layui-form-item">
-							 
 							<button type="button" class="btn btn-sm btn-success" onclick="refresh(true)">刷 新</button>
+						<div class="layui-form-item hide">
+							 
 							 <span class="text-primary">切换主题</span>
 							<div class="layui-input-block"> <select id="theme-select"></select> 
 							 <span id='wrong-message' style="color:red"></span>
@@ -163,12 +179,6 @@ option = {
    
 </form>
 
-<div class="layui-form-item">
-    <div class="layui-input-block">
-      <button class="layui-btn" >保存</button>  
-	  <button class="layui-btn" >预览</button>
-    </div>
-  </div>
  
 	<script src="asset/js/jquery.min.js"></script>
     
