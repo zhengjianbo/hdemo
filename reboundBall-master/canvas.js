@@ -18,20 +18,7 @@ var  DistanceFromPointToLine=function(   x,   y,   x1,   y1,   x2,   y2)
  
 	return Math.abs(a * x + b * y + c) / Math.sqrt(a * a + b * b);
 }
- 
-// 圆与线条碰撞检测
-// 圆心(x, y), 半径r,  开始点 结束点  线条
-var  IsCircleIntersectRectangle=function(  x,   y,   r,    x1,    y1,    x2,    y2)
-{
-	var  w1 = DistanceBetweenTwoPoints(x1, y2, x2, y2); 
-	 
-	var  w2 = DistanceFromPointToLine(x, y, x1, y1, x2, y2); 
- 
-	if (w2 > r)
-		return false;
-	 
-	return true;
-}
+  
 
 var IsCircleIntersectLineSeg=function (   x,    y,    r,    x1,    y1,    x2,    y2)
 {
@@ -86,10 +73,7 @@ var p0y=100;
  var p1x=200;
  var p1y=100;
 var px=(p1x-p0x)/2+p0x;
-var py=(p1y-p0y)/2+p0y; 
-
-//var isIntersect=IsCircleIntersectRectangle(100,100,50,px,py,p1x,p1y,px,py)
-//	console.log("isIntersect:"+isIntersect);
+var py=(p1y-p0y)/2+p0y;  
 	
 	 canvas.onmousedown = function(ev){
                 var ev=ev || window.event;
@@ -197,8 +181,8 @@ $('#canvas').mousemove(function(e){
     var colors = ["#FFB6C1", "#e2ff5b", "#FF4500", "#9ACD32", "#7FFFD4", "#ff6900", "#ddff59", "#66FFCC", "#00FF99"];
     var flag = true;
     var Ball = function (radius, vx, vy, color) {
-        this.x = 400;
-        this.y = 400;
+        this.x = 100;
+        this.y = 150;
         this.radius = radius;
         this.vx = vx;
         this.vy = vy;
@@ -213,20 +197,31 @@ $('#canvas').mousemove(function(e){
 		 
 		
     };
-	// 方形区域   radius 角度旋转
-	var Line = function (radius, vx, vy, color,longlength) {
-		this.type="Rect";
-        this.x = 400;
-        this.y = 400; 
-        this.width = 100; 
-        this.height = 30; 
-        this.vx = vx;
-        this.vy = vy;
+	//  
+	var Line = function (radius, x1, y1,x2,y2, color) {
+		this.type="Line"; 
         this.color = color;
-		this.radius=20;
-		 //通用绘制
-		this.draw = function  (context) {
-             //    console.log("draw");
+		 
+		this.draw = function  (ctx) {
+			//console.log("Line:");		
+	ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);  
+    ctx.fillStyle = "#FF0000";
+    ctx.strokeStyle = "#FF0000";
+    ctx.stroke(); 
+					
+			 		 var p0x=x1;
+			 	var p0y=y1;
+			 	 
+			 	 var p1x=x2;
+			 	 var p1y=y2;
+			 	 
+			 	 var isIntersect=IsCircleIntersectLineSeg(balls[0].x,balls[0].y,balls[0].radius, p0x,p0y,p1x,p1y)
+			 	 
+			 	 if(isIntersect){
+			 			console.log("isIntersect:"+isIntersect);
+			 	 }
         };
     };
 	
@@ -258,6 +253,7 @@ function collision(obj1,obj2){
 	}
 }
 	
+	 
 	var Rect = function (radius, vx, vy, color) {
 		this.type="Rect";
         this.x = 100;
@@ -277,6 +273,8 @@ function collision(obj1,obj2){
             ctx1.fillRect(this.x,this.y,this.width,this.height);
            
 			ctx1.restore();
+			
+		
 
         };
     };
@@ -284,8 +282,8 @@ function collision(obj1,obj2){
     var balls=[];
     for (var i = 0; i < numBall; i++) {
         var radius = 15 + (Math.random() * 10);
-        var vx = (Math.random() * 20) - 10;
-        var vy = (Math.random() * 20) - 10;
+        var vx = 100;//(Math.random() * 200) - 10;
+        var vy = 0;//(Math.random() * 200) - 10;
         var index = Math.floor(Math.random() * 10);
         var color = colors[index];
         var ball = new Ball(radius, vx, vy, color);
@@ -300,43 +298,63 @@ function collision(obj1,obj2){
 		var ballR = new Rect(radius, vx, vy, color);
 			balls.push(ballR);
 	 
-	var Line1 = new Line(radius, vx, vy, color,10);
-			Line1.draw();
+	var Line1 = new Line(radius, 100,100,250,200, color);
+	balls.push(Line1);
+	 
+	 
+var ball=balls[0];
+var cv = {r:ball.radius,p0:{x:ball.x,y:ball.y},vx:ball.vx, vy:ball.vy};
+ 	 
+var walls = [{p0:{x:100,y:100}, p1:{x:250,y:200}, bf:1, wf:1},
+{p0:{x:0,y:0}, p1:{x:400,y:0}, bf:1, wf:1},
+              {p0:{x:400,y:0}, p1:{x:400,y:220}, bf:1, wf:1},
+              {p0:{x:400,y:220}, p1:{x:0,y:220}, bf:1, wf:1},
+              {p0:{x:0,y:220}, p1:{x:0,y:0}, bf:1, wf:1}
+ ];
+
+for(var i = 0; i < walls.length; ++i) {
+    updateVector(walls[i], true);
+}
+
+	 var lastTime = new Date().getTime();
 	 
     function animate() {
         context.clearRect(0, 0, canvasWidth, canvasHeight);      //清空
         for (var i = 0; i < balls.length; i++) {
             var tmpball;
             tmpball = balls[i];
-            if (tmpball.x + tmpball.radius > canvasWidth || tmpball.x - tmpball.radius < 0) {
-                tmpball.vx = -tmpball.vx;
-            }
-            if (tmpball.y + tmpball.radius > canvasHeight || tmpball.y - tmpball.radius < 0) {
-                tmpball.vy = -tmpball.vy;
-            }
+         //   if (tmpball.x + tmpball.radius > canvasWidth || tmpball.x - tmpball.radius < 0) {
+         //       tmpball.vx = -tmpball.vx;
+         //   }
+         //   if (tmpball.y + tmpball.radius > canvasHeight || tmpball.y - tmpball.radius < 0) {
+         //       tmpball.vy = -tmpball.vy;
+         //   }
           
 			if(tmpball["type"]=="Rect"){
 				 context.fillStyle = "steelblue";
 				tmpball.draw(context);
 				  
 			}else{  //检测边界碰撞
-				tmpball.x += tmpball.vx;
-				tmpball.y += tmpball.vy;
-			
+				//tmpball.x += tmpball.vx;
+				//tmpball.y += tmpball.vy; 
 				tmpball.draw(context);
 			}
 			
         }
 		
-		 var p0x=0;
-var p0y=100;
  
- var p1x=8000;
- var p1y=100;var isIntersect=IsCircleIntersectLineSeg(balls[0].x,balls[0].y,balls[0].radius, p0x,p0y,p1x,p1y)
- if(isIntersect){
-		console.log("isIntersect:"+isIntersect);
- }
-		
+//球所在位置
+ var circle=balls[0];
+    var nowTime = new Date().getTime();
+    var delta = (nowTime - lastTime) / 1000;
+    lastTime = nowTime; 
+    updateObjPosByTime(cv, delta);
+    checkWalls(cv, walls);
+    circle.x = cv.p1.x;
+    circle.y = cv.p1.y;
+    cv.p0 = cv.p1;
+    cv.vx /= cv.delta;
+    cv.vy /= cv.delta; 
 		//collision(balls[0],balls[1]);
 		//redraw();
         if (flag) {
