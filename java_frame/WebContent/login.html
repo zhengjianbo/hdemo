@@ -17,50 +17,27 @@
   <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->          
     <div class="fly-header layui-bg-black"> <div class="layui-container">
-
-
-
+ 
 <ul class="layui-nav">
   <li class="layui-nav-item"><a href="">电子宣传栏</a></li>
   
 	 <li class="layui-nav-item"><a href="">管理登录</a></li>
-  <!-- 
-  <li class="layui-nav-item layui-this">
-    <a href="javascript:;">产品</a>
-    <dl class="layui-nav-child">
-      <dd><a href="">选项1</a></dd>
-      <dd><a href="">选项2</a></dd>
-      <dd><a href="">选项3</a></dd>
-    </dl>
-  </li>
-  <li class="layui-nav-item"><a href="">大数据</a></li>
-  <li class="layui-nav-item">
-    <a href="javascript:;">解决方案</a>
-    <dl class="layui-nav-child">
-      <dd><a href="">移动模块</a></dd>
-      <dd><a href="">后台模版</a></dd>
-      <dd class="layui-this"><a href="">选中项</a></dd>
-      <dd><a href="">电商平台</a></dd>
-    </dl>
-  </li>
- 
-  -->
+  
 </ul>
    </div>
    </div>
    <div class="layui-container fly-marginTop"> <div class="fly-panel fly-panel-user" pad20=""> 
 			<div class="layui-tab layui-tab-brief" lay-filter="user">
-<!-- 			<ul class="layui-tab-title"> <li class="layui-this">登入</li> <li><a href="/user/reg/">注册</a></li> </ul> 
--->
+ 
 			
 				<div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;"> <div class="layui-tab-item layui-show"> <div class="layui-form layui-form-pane">
 
 				<form class="layui-form" action="#" lay-filter="xexample">
-					<div class="layui-form-item"> <label for="L_email" class="layui-form-label">用户名</label> <div class="layui-input-inline"> 
-							<input type="text" id="L_loginName" name="loginName" required="" lay-verify="required" autocomplete="off" class="layui-input"> </div> 
+					<div class="layui-form-item"> <label for="username" class="layui-form-label">用户名</label> <div class="layui-input-inline"> 
+							<input type="text" id="username" name="username" required="" lay-verify="required" autocomplete="off" class="layui-input"> </div> 
 							</div> 
-							<div class="layui-form-item"> <label for="L_pass" class="layui-form-label">密码</label> 
-							<div class="layui-input-inline"> <input type="password" id="L_pass" name="pass" required="" lay-verify="required" autocomplete="off" class="layui-input"> </div> </div> 
+							<div class="layui-form-item"> <label for="password" class="layui-form-label">密码</label> 
+							<div class="layui-input-inline"> <input type="password" id="password" name="password" required="" lay-verify="required" autocomplete="off" class="layui-input"> </div> </div> 
 						 
 							
 							<div class="layui-form-item"> <button class="layui-btn" lay-filter="login" lay-submit="">立即登录</button>  </div>
@@ -87,18 +64,23 @@ layui.use(['form', 'layedit', 'laydate'], function(){
     
 	
 	var ajaxLoad =function(fields){ 
-		var requestUrl= ''; //配置 
+		console.log("APIRest.getLoginAjax();:"+APIRest.getLoginAjax());
+		var requestUrl= APIRest.getLoginAjax();// //配置 
 		function inner_showdata(data) {  
 			if(Const.isEmpty(data)){ 
 				AlertBox("失败");
 				return;
 			}
-			AlertBox(data.MESSAGE);
+			//AlertBox(data.MESSAGE);
 			if(data.RESULT){  
+				//登录成功
+				location.href=APIRest.getConsole();
 				return;
-			}  
+			} else{
+				AlertBox(data.MESSAGE);
+			}
 		}  
-		var params={};
+		var params=fields;
 		var req = ReqUtils.create(requestUrl, params, function(result,
 				p1, p2, p3) {
 			if (result == 0) { 
@@ -113,7 +95,7 @@ layui.use(['form', 'layedit', 'laydate'], function(){
 	} 
   //监听提交
   form.on('submit(login)', function(data){ 
-			ajaxLoad(data.fields);
+			ajaxLoad(data.field);
             return false;
   });
   

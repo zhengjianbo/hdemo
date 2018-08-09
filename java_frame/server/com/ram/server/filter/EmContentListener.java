@@ -60,7 +60,7 @@ public class EmContentListener implements ServletContextListener {
 				Future<Boolean> future = MConfig.taskExecutor
 						.submit(new Callable<Boolean>() {
 							public Boolean call() throws Exception { 
-//								System.out.println("系统启动完成");
+ 								System.out.println("系统启动完成");
 								return true;
 							}
 						});
