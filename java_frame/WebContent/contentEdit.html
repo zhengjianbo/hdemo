@@ -34,83 +34,13 @@
 
 
 <ul class="layui-nav">
-  <li class="layui-nav-item"><a href="">电子宣传栏-图形编辑</a></li>
+  <li class="layui-nav-item"><a href="">电子宣传栏-内容编辑</a></li>
   
 	  
 </ul>
    </div>
    </div>
-    <div id="sidebar-code" class="well sidebar-nav hide">
-                    <div class="nav-header"><a href="#" onclick="autoResize()" class="glyphicon glyphicon-resize-full" id ="icon-resize" ></a>option</div>
-                    <textarea id="code" name="code">
-option = {
-    title : {
-        text: '某地区蒸发量和降水量',
-        subtext: '纯属虚构'
-    },
-    tooltip : {
-        trigger: 'axis'
-    },
     
-  // toolbox: {
-  //     show : true,
-  //     feature : {
-  //         mark : {show: true},
-  //         dataView : {show: true, readOnly: false},
-  //         magicType : {show: true, type: ['line', 'bar']},
-  //         restore : {show: true},
-  //         saveAsImage : {show: true}
-  //     }
-  // },
-    calculable : true,
-    xAxis : [
-        {
-            type : 'category',
-            data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
-        }
-    ],
-    yAxis : [
-        {
-            type : 'value'
-        }
-    ],
-    series : [
-        {
-            name:'蒸发量',
-            type:'bar',
-            data:[211.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
-            markPoint : {
-                data : [
-                    {type : 'max', name: '最大值'},
-                    {type : 'min', name: '最小值'}
-                ]
-            },
-            markLine : {
-                data : [
-                    {type : 'average', name: '平均值'}
-                ]
-            }
-        },
-        {
-            name:'降水量',
-            type:'bar',
-            data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3],
-            markPoint : {
-                data : [
-                    {name : '年最高', value : 182.2, xAxis: 7, yAxis: 183, symbolSize:18},
-                    {name : '年最低', value : 2.3, xAxis: 11, yAxis: 3}
-                ]
-            },
-            markLine : {
-                data : [
-                    {type : 'average', name : '平均值'}
-                ]
-            }
-        }
-    ]
-};
-                    </textarea>
-              </div>
 <form class="layui-form" >
 
    
@@ -125,30 +55,8 @@ option = {
 				  </div>
 				</div>
 			</div>
-			<div class="layui-form-item" >
-				<div class="layui-inline">
-				  <label class="layui-form-label">图形类型</label>
-				  <div class="layui-input-inline">
-					<select name="select_screentype">
-					  <option value="">选择类型</option>
-					  
-						<option value="6,6">柱状图</option>
-						<option value="3,9">线状图</option>
-						<option value="3,9">饼状图</option>
-					  
-					</select>
-				  </div>
-				</div>
-			</div>
-						
-			<div class="layui-form-item" >
-				<div class="layui-inline">
-				  <label class="layui-form-label"></label>
-				  <div class="layui-input-inline">
-					 
-				  </div>
-				</div>
-			</div>		
+			 
+					 	
 			
 			<div class="layui-form-item">
 				<div class="layui-input-block">
@@ -157,22 +65,7 @@ option = {
 				</div>
 			  </div>
 		</div>
-		<div class="layui-col-xs6">
-		  <div>显示图形</div>
-		  <div style="line-height:150px" >
-					<div id="graphic">
-						<div id="main" class="main"></div>
-							<button type="button" class="btn btn-sm btn-success" onclick="refresh(true)">刷 新</button>
-						<div class="layui-form-item hide">
-							 
-							 <span class="text-primary">切换主题</span>
-							<div class="layui-input-block"> <select id="theme-select"></select> 
-							 <span id='wrong-message' style="color:red"></span>
-							</div>
-						</div>
-					</div> 
-		  </div>
-		</div>
+		 
 	  </div>
     
    </div>

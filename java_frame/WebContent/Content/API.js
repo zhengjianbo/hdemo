@@ -226,7 +226,30 @@ var AlertBox=function(msg){
           layer.closeAll();
         }
       });
-}	 
+}	
+
+ var AlertCheck=function(msg,obj,fun){ 
+	console.log("obj:"+obj);
+      layer.open({
+        type: 1
+        ,title: false 
+        ,closeBtn: false
+        ,area: '300px;'
+        ,shade: 0.8
+        ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+        ,btn: ['确定', '取消']
+        ,btnAlign: 'c'
+        ,moveType: 1 //拖拽模式，0或者1
+        ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">'+msg+'</div>'
+        ,success: function(layero){
+          var btn = layero.find('.layui-layer-btn');
+          btn.find('.layui-layer-btn0').attr({
+            "data-value": obj ,
+			"onclick":fun+"(this);",
+          });
+        }
+      }); 
+ } 
 
 var BASE_URL = "";
 

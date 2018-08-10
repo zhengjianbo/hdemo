@@ -48,7 +48,10 @@
 						<option value="4">图形-柱状图</option>
 					  </select>
 					  
-					  <button class="layui-btn layui-btn-sm " id="bt_select" lay-submit lay-filter="bt_filter_select">编辑</button>
+					  
+				  </div><div class="layui-input-inline">
+					 
+					  <button class="layui-btn layui-btn-sm " id="bt_select" lay-submit lay-filter="bt_filter_select">查询</button>
 					  
 				  </div>
 				</div>
@@ -84,8 +87,8 @@
 			<td> 文字</td><td >s </td>
 			<td></td>
 			<td><div class="layui-btn-group"> 
-    <button class="layui-btn layui-btn-sm " value="1"  lay-submit lay-filter="bt_filter_edit">编辑</button>
-    <button class="layui-btn layui-btn-sm" lay-submit lay-filter="bt_filter_delete">删除</button>
+    <button class="layui-btn layui-btn-sm " value="1" data-type-value="" lay-submit lay-filter="bt_filter_edit">编辑</button>
+    <button class="layui-btn layui-btn-sm" value="1" lay-submit lay-filter="bt_filter_delete">删除</button>
   </div></td>
 		</tr>
 			 
@@ -93,18 +96,22 @@
 		
 		<!-- 分页 -->
 		
-<div id="demo1"></div>
-	<input type="text" name="input_pagenum"  value="1" autocomplete="off" class="layui-input">
-
+		<div id="demo1"></div>
+		<input type="text" name="input_pagenum" id="input_pagenum"  value="1" autocomplete="off" class="layui-input">
     </div>
-  </div>
-   
+  </div> 
 </div>
   
-<script src="layui.all.js" charset="utf-8"></script>
-<script src="assets/media/js/jquery-2.0.0.min.js" charset="utf-8"></script>
+<script src="layui.all.js" charset="utf-8"></script> 
+<script src="asset/js/jquery.min.js" charset="utf-8"></script>	
+<script src="Content/API.js" charset="utf-8"></script>	
+
 <script>
- 
+ var deleteFun=function(obj){
+		 console.log("deleteFun"+$(obj).attr("data-value"));
+		 //删除内容 如果删除失败 提示 
+		 //否则刷新页面
+}
 
 layui.use(['form', 'layedit', 'laydate','laypage', 'layer'], function(){
   var form = layui.form
@@ -118,27 +125,37 @@ layui.use(['form', 'layedit', 'laydate','laypage', 'layer'], function(){
 	//总页数大于页码总数
   laypage.render({
     elem: 'demo1'
-    ,count: 20 //数据总数
-    ,jump: function(obj){
+    ,count: 20  
+	,curr: $("#input_pagenum").val()
+    ,jump: function(obj, first){
 		//页面赋值  然后提交查询
-		
-			// document.getElementById("bt_select").click();
-			
+		var thispage=obj.curr;
+		$("#input_pagenum").val(thispage);	  
+		 if(!first){
+			$("#bt_select").click();
+		}
     }
   });
 	
 	form.on('submit(bt_filter_edit)', function(data){
-		  console.log(data.elem.value) //被执行事件的元素DOM对象，一般为button对象
-		  
-		  //执行编辑 跳转到页面
-		   
-		  return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+		var keyValue=$(data.elem).val();
+		var type=$(data.elem).attr("data-type-value");
+		
+			if(type=="1"){
+				location.href="contentEdit.html";
+			}else if(type=="2"){
+				location.href="contentEdit.html";
+			}  
+		  return false; 
 	});
 	
+	
+	form.on('submit(bt_filter_select)', function(data){
+		 	  
+	});
 	form.on('submit(bt_filter_delete)', function(data){
 			   //删除内容 完成后刷新功能
-			  
-			  
+			   AlertCheck("是否要删除配置!",$(data.elem).val(),"deleteFun");
 			  return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
 	});
 	
@@ -146,11 +163,7 @@ layui.use(['form', 'layedit', 'laydate','laypage', 'layer'], function(){
 		  console.log(data.elem); //得到select原始DOM对象
 		  console.log(data.value); //得到被选中的值
 		  console.log(data.othis); //得到美化后的DOM对象
-		  //执行 跳转到
-			//	<option value="1">文字内容</option> 
-			//			<option value="2">图形-饼图</option>
-			//			<option value="3">图形-线图</option>
-			//			<option value="4">图形-柱状图</option>
+		  
 			if(data.value=="1"){
 				location.href="contentEdit.html";
 			}else if(data.value=="2"){
