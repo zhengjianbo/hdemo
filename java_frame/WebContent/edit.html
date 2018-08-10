@@ -9,15 +9,7 @@
   <link rel="stylesheet" href="css/layui.css"  media="all">
   <link rel="stylesheet" href="css/global.css"  media="all">
   <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
-  
    
-<script type="text/javascript" charset="utf-8" src="Content/ueditor/ueditor.config.js?v=7"></script>
-<script type="text/javascript" charset="utf-8" src="Content/ueditor/editor_api.js?v=6"> </script>
-<!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
-<!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
-<script type="text/javascript" charset="utf-8" src="Content/ueditor/lang/zh-cn/zh-cn.js"></script>
-
-
 </head>
 <body >
 
@@ -40,10 +32,10 @@
    
 <form class="layui-form" action="">
  <div class="layui-form-item" style="padding-top:15px;">
-		<div class="layui-inline">
+		<div class="layui-inline " style="display:none">
 		  <label class="layui-form-label">屏幕类型</label>
 		  <div class="layui-input-inline">
-			<select name="select_screentype">
+			<select name="select_screentype"  lay-filter="filter_select_screentype">
 			  <option value="">请选择屏幕</option>
 			  <optgroup label="双屏">
 				<option value="6,6">双屏1:1</option>
@@ -54,16 +46,15 @@
 		  </div>
 		</div>
 	</div>
-   <script id="x_editor" type="text/plain" style="width:200x;height:400px;">
-                </script>
+ 
    
    <div class="layui-container fly-marginTop layui-form-item"> 
 	<div class="layui-row">
 		<div class="layui-col-xs6">
-		  <div class="grid-demo grid-demo-bg1" style="line-height:150px">编辑内容(6/12)</div>
+		  <div class="grid-demo grid-demo-bg1" style="line-height:150px">编辑内容</div>
 		</div>
 		<div class="layui-col-xs6">
-		  <div class="grid-demo" style="line-height:150px">编辑内容(6/12)</div>
+		  <div class="grid-demo" style="line-height:150px">编辑内容</div>
 		</div>
 	  </div>
     
@@ -71,25 +62,40 @@
    
 <div class="layui-form-item">
     <div class="layui-input-block">
-      <button class="layui-btn" lay-filter="demo1">保存</button>  
-	  <button class="layui-btn" lay-filter="demo1">预览</button>
+      <button class="layui-btn" lay-submit  lay-filter="filter_bt_save">保存</button>  
+	  <button class="layui-btn" lay-submit  lay-filter="filter_bt_review">预览</button>
     </div>
   </div>
  
 </form>
           
-<script src="layui.all.js" charset="utf-8"></script>
+<script src="layui.all.js" charset="utf-8"></script> 
+<script src="asset/js/jquery.min.js" charset="utf-8"></script>	
+<script src="Content/API.js" charset="utf-8"></script>	
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
-<script>
-	layui.use(['form', 'layedit', 'laydate'], function(){
-	  var form = layui.form
-	  ,layer = layui.layer
-	  ,layedit = layui.layedit
-	  ,laydate = layui.laydate;
-	   
+<script> 
+ 
+layui.use(['form', 'layedit', 'laydate','laypage', 'layer'], function(){
+  var form = layui.form
+  ,layer = layui.layer
+  ,layedit = layui.layedit
+  ,laydate = layui.laydate;
+    
+ var laypage = layui.laypage
+  ,layer = layui.layer;
+  
+	 
+	 
+	form.on('submit(filter_bt_save)', function(data){
+		 	  
+		return false;
 	});
-
- var ue = UE.getEditor('x_editor');
+	
+	form.on('submit(filter_bt_review)', function(data){
+		 	  
+			   return false;
+	});   
+});  
 
 </script>
 
